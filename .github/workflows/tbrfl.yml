@@ -1,0 +1,50 @@
+name: tbrfl
+
+on:
+  schedule:
+    - cron: '*/12 * * * *'
+  workflow_dispatch:
+
+jobs:
+  run-tbrfl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install GPG
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q gnupg
+
+      - name: Decrypt files
+        env:
+          FILE_PASSPHRASE: ${{ secrets.FILE_PASSPHRASE }}
+        run: |
+          if [ -f "tbrfl.py.gpg" ]; then
+            echo "$FILE_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt tbrfl.py.gpg > tbrfl.py
+          fi
+          if [ -f "tbrfl.yaml.gpg" ]; then
+            echo "$FILE_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt tbrfl.yaml.gpg > tbrfl.yaml
+          fi
+          if [ -f "mat.txt.gpg" ]; then
+            echo "$FILE_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt mat.txt.gpg > mat.txt
+          fi
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install requests pyyaml
+
+      - name: Run tbrfl.py
+        env:
+          TOKEN_MAIN: ${{ secrets.TOKEN_MAIN }}
+          NOTIFY_WEBHOOK: ${{ secrets.NOTIFY_WEBHOOK }}
+        run: |
+          python tbrfl.py
