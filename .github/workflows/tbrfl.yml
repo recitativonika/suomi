@@ -21,16 +21,16 @@ jobs:
 
       - name: Decrypt files
         env:
-          FILE_PASSPHRASE: ${{ secrets.FILE_PASSPHRASE }}
+          SCRIPT_PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
         run: |
           if [ -f "tbrfl.py.gpg" ]; then
-            echo "$FILE_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt tbrfl.py.gpg > tbrfl.py
+            echo "$SCRIPT_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt tbrfl.py.gpg > tbrfl.py
           fi
           if [ -f "tbrfl.yaml.gpg" ]; then
-            echo "$FILE_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt tbrfl.yaml.gpg > tbrfl.yaml
+            echo "$SCRIPT_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt tbrfl.yaml.gpg > tbrfl.yaml
           fi
           if [ -f "mat.txt.gpg" ]; then
-            echo "$FILE_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt mat.txt.gpg > mat.txt
+            echo "$SCRIPT_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt mat.txt.gpg > mat.txt
           fi
 
       - name: Setup Python
