@@ -1,0 +1,57 @@
+name: rnxs
+
+on:
+  schedule:
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-rnxs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install GPG
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q gnupg
+
+      - name: Decrypt rnxs.sh
+        env:
+          SCRIPT_PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
+        run: |
+          if [ -f "rnxs.sh.gpg" ]; then
+            echo "$SCRIPT_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt rnxs.sh.gpg > rnxs.sh
+            chmod +x rnxs.sh
+          elif [ -f "rnxs.sh" ]; then
+            chmod +x rnxs.sh
+          else
+            exit 1
+          fi
+
+      - name: Run rnxs.sh
+        env:
+          WEBHOOK_1: ${{ secrets.WEBHOOK_1 }}
+          WEBHOOK_2: ${{ secrets.WEBHOOK_2 }}
+          WEBHOOK_3: ${{ secrets.WEBHOOK_3 }}
+          REFRESH_SUCCESS_TARGET: 1
+          REFRESH_ACCUMULATE: 1
+          CONCURRENCY: 3
+          LOOP_MODE: "once"
+          LOG_MODE: "logfull"
+          SEND_DISCORD: 1
+        run: |
+          ./rnxs.sh 1
+
+      - name: Upload Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-${{ github.run_id }}
+          path: |
+            /tmp/*.log
+            *.log
+          retention-days: 7
