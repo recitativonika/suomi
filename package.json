@@ -1,0 +1,22 @@
+{
+  "name": "superboard-wallet-automation",
+  "version": "1.0.0",
+  "description": "Automated wallet processing for SuperBoard",
+  "main": "process.js",
+  "scripts": {
+    "start": "node process.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "ethers": "^6.10.0",
+    "siwe": "^2.1.0",
+    "dotenv": "^16.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["ethereum", "wallet", "automation", "superboard"],
+  "author": "Your Name",
+  "license": "MIT"
+}
