@@ -1,4 +1,4 @@
-name: Update Timestamp
+name: Update Profile Timestamp
 
 on:
   schedule:
@@ -6,37 +6,43 @@ on:
   workflow_dispatch:
     inputs:
       custom_message:
-        description: ' '
+        description: 'Custom commit message (optional)'
         required: false
         default: 'Manual update'
 
-permissions:
-  contents: write
-
 jobs:
-  update-timestamp:
+  update-profile:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     
     steps:
-      - name: Checkout repository
+      - name: Checkout workflow repo
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update Timestamp File
+      - name: Clone profile repo
+        env:
+          PROFILE_TOKEN: ${{ secrets.PROFILE_TOKEN }}
+        run: |
+          git clone https://$PROFILE_TOKEN@github.com/recitativonika/recitativonika.git profile-repo
+          cd profile-repo
+
+      - name: Update timestamp
+        working-directory: ./profile-repo
         run: |
           current_time=$(date '+%Y-%m-%d %H:%M:%S')
           echo "Last updated: $current_time" > timestamp.txt
 
-      - name: Configure Git
+      - name: Configure git
+        working-directory: ./profile-repo
         run: |
           git config user.name "recitativonika"
           git config user.email "fool-body-cheddar@duck.com"
 
-      - name: Commit and Push Changes
+      - name: Commit and push
         env:
           CUSTOM_MSG: ${{ inputs.custom_message }}
+          PROFILE_TOKEN: ${{ secrets.PROFILE_TOKEN }}
+        working-directory: ./profile-repo
         run: |
           if [[ $(git status --porcelain timestamp.txt) ]]; then
             if [[ "${{ github.event_name }}" == "workflow_dispatch" && -n "$CUSTOM_MSG" ]]; then
@@ -55,6 +61,5 @@ jobs:
             
             git add timestamp.txt
             git commit -m "$commit_message"
-            git push origin HEAD:main
-            
+            git push https://$PROFILE_TOKEN@github.com/recitativonika/recitativonika.git HEAD:main
           fi
