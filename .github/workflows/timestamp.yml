@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       custom_message:
-        description: 'Custom commit message (optional)'
+        description: ''
         required: false
         default: 'Manual update'
 
