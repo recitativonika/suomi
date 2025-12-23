@@ -23,7 +23,19 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          ref: master
+          fetch-depth: 0
+
+      - name: Check and setup branch
+        run: |
+          # Cek apakah branch master ada
+          if git show-ref --quiet refs/heads/master; then
+            echo "Branch master exists"
+            git checkout master
+          else
+            echo "Branch master does not exist, creating from current branch"
+            # Buat branch master dari current branch
+            git checkout -b master
+          fi
 
       - name: Update Timestamp File
         run: |
@@ -56,5 +68,7 @@ jobs:
             
             git add timestamp.txt
             git commit -m "$commit_message"
-            git push origin master  # Push ke branch master
+            git push origin master
+          else
+            echo "No changes to commit"
           fi
