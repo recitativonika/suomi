@@ -1,0 +1,78 @@
+name: SPRB
+
+on:
+  schedule:
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+    inputs:
+      min_delay:
+        description: 'min'
+        required: true
+        default: '700'
+        type: number
+      max_delay:
+        description: 'max'
+        required: true
+        default: '1500'
+        type: number
+
+jobs:
+  runner:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install tools
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q gnupg
+
+      - name: Decrypt script
+        env:
+          PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
+        run: |
+          if [ -f "spr.js.gpg" ]; then
+            echo "$PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt spr.js.gpg > spr.js
+          else
+            echo "File tidak ditemukan"
+            exit 1
+          fi
+
+      - name: Decrypt data
+        env:
+          PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
+        run: |
+          if [ -f "spr.txt.gpg" ]; then
+            echo "$PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt spr.txt.gpg > spr.txt
+          else
+            echo "File not found!"
+            exit 1
+          fi
+
+      - name: Setup environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install packages
+        run: npm install
+
+      - name: Execute
+        env:
+          WEBHOOK_URL: ${{ secrets.SPR_WEBHOOK }}
+          MIN_DELAY: ${{ inputs.min_delay || 700 }}
+          MAX_DELAY: ${{ inputs.max_delay || 1500 }}
+        run: |
+          node spr.js > /dev/null 2>&1
+
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -f spr.txt spr.js
+          rm -f *.log
+          rm -f /tmp/*.log
+          echo "done"
