@@ -23,6 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          ref: master
 
       - name: Update Timestamp File
         run: |
@@ -55,5 +56,5 @@ jobs:
             
             git add timestamp.txt
             git commit -m "$commit_message"
-            git push origin HEAD:main --force  # Force push langsung
+            git push origin master  # Push ke branch master
           fi
