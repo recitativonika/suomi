@@ -1,0 +1,46 @@
+name: tbrml
+
+on:
+  schedule:
+    - cron: '*/6 * * * *'
+  workflow_dispatch:
+
+jobs:
+  run-tbrml:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install GPG
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q gnupg
+
+      - name: Decrypt files
+        env:
+          SCRIPT_PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
+        run: |
+          if [ -f "tbrml.py.gpg" ]; then
+            echo "$SCRIPT_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt tbrml.py.gpg > tbrml.py
+          fi
+          if [ -f "tbrml.txt.gpg" ]; then
+            echo "$SCRIPT_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt tbrml.txt.gpg > tbrml.txt
+          fi
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+
+      - name: Run tbrml.py
+        env:
+          NOTIFY_WEBHOOK: ${{ secrets.NOTIFY_WEBHOOK }}
+        run: |
+          python tbrml.py
