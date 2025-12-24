@@ -9,7 +9,8 @@ jobs:
   run-tbrfl:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-
+    permissions:
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -57,21 +58,10 @@ jobs:
           git config --global user.email 'github-actions@github.com'
           
           if [ -f "idtrb.txt" ]; then
-            echo "idtrb.txt content:"
-            cat idtrb.txt
-            
-            # Optional: Add timestamp to commit message
-            timestamp=$(date +'%Y-%m-%d %H:%M:%S')
-            
             git add idtrb.txt
             
             if ! git diff --cached --quiet; then
-              git commit -m "Update idtrb.txt [auto] $timestamp"
+              git commit -m "Update idtrb.txt [auto]"
               git push
-              echo "Committed and pushed idtrb.txt"
-            else
-              echo "No changes to idtrb.txt"
             fi
-          else
-            echo "idtrb.txt not found"
           fi
