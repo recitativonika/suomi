@@ -60,10 +60,13 @@ jobs:
             echo "idtrb.txt content:"
             cat idtrb.txt
             
+            # Optional: Add timestamp to commit message
+            timestamp=$(date +'%Y-%m-%d %H:%M:%S')
+            
             git add idtrb.txt
             
             if ! git diff --cached --quiet; then
-              git commit -m "Update idtrb.txt [auto]"
+              git commit -m "Update idtrb.txt [auto] $timestamp"
               git push
               echo "Committed and pushed idtrb.txt"
             else
