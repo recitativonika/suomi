@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install GPG
         run: |
@@ -48,3 +50,25 @@ jobs:
           NOTIFY_WEBHOOK: ${{ secrets.NOTIFY_WEBHOOK }}
         run: |
           python tbrfl.py
+
+      - name: Commit idtrb.txt
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          
+          if [ -f "idtrb.txt" ]; then
+            echo "idtrb.txt content:"
+            cat idtrb.txt
+            
+            git add idtrb.txt
+            
+            if ! git diff --cached --quiet; then
+              git commit -m "Update idtrb.txt [auto]"
+              git push
+              echo "Committed and pushed idtrb.txt"
+            else
+              echo "No changes to idtrb.txt"
+            fi
+          else
+            echo "idtrb.txt not found"
+          fi
