@@ -8,7 +8,7 @@ on:
 jobs:
   run-rnxs:
     runs-on: ubuntu-latest
-    timeout-minutes: 240
+    timeout-minutes: 400
 
     steps:
       - name: Checkout repository
@@ -37,21 +37,11 @@ jobs:
           WEBHOOK_1: ${{ secrets.WEBHOOK_1 }}
           WEBHOOK_2: ${{ secrets.WEBHOOK_2 }}
           WEBHOOK_3: ${{ secrets.WEBHOOK_3 }}
-          REFRESH_SUCCESS_TARGET: 1
+          REFRESH_SUCCESS_TARGET: 3
           REFRESH_ACCUMULATE: 1
-          CONCURRENCY: 3
+          CONCURRENCY: 5
           LOOP_MODE: "once"
           LOG_MODE: "logfull"
           SEND_DISCORD: 1
         run: |
           ./rnxs.sh 1
-
-      - name: Upload Logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: logs-${{ github.run_id }}
-          path: |
-            /tmp/*.log
-            *.log
-          retention-days: 7
