@@ -1,0 +1,71 @@
+name: cmul
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+jobs:
+  run-cmul:
+    runs-on: ubuntu-latest
+    timeout-minutes: 250
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install GPG
+        run: |
+          sudo apt-get update -q > /dev/null 2>&1
+          sudo apt-get install -y -q gnupg > /dev/null 2>&1
+
+      - name: Decrypt files
+        env:
+          SCRIPT_PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
+        run: |
+          if [ -f "cmul.py.gpg" ]; then
+            echo "$SCRIPT_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt cmul.py.gpg > cmul.py 2>/dev/null
+            chmod +x cmul.py
+          fi
+          if [ -f "cmul.yaml.gpg" ]; then
+            echo "$SCRIPT_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt cmul.yaml.gpg > cmul.yaml 2>/dev/null
+          fi
+          if [ -f "cmul.txt.gpg" ]; then
+            echo "$SCRIPT_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt cmul.txt.gpg > cmul.txt 2>/dev/null
+          fi
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install requests pyyaml > /dev/null 2>&1
+
+      - name: Run cmul.py
+        id: run_script
+        env:
+          TOKEN_SUB: ${{ secrets.TOKEN_SUB }}
+          LOG_WEBHOOK: ${{ secrets.LOG_WEBHOOK }}
+          DELAY_MESSAGE_MS: ${{ vars.DELAY_MESSAGE_MS || '1500' }}
+          DELAY_TOKEN_MS: ${{ vars.DELAY_TOKEN_MS || '3000' }}
+          MESSAGES_PER_ACCOUNT: ${{ vars.MESSAGES_PER_ACCOUNT || '5' }}
+        run: |
+          python cmul.py cmul.yaml > /dev/null 2>&1 && echo "SUCCESS=true" >> $GITHUB_OUTPUT || echo "FAILED=true" >> $GITHUB_OUTPUT
+
+      - name: Log
+        if: steps.run_script.outputs.FAILED == 'true'
+        env:
+          LOG_WEBHOOK: ${{ secrets.LOG_WEBHOOK }}
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+          -d "{\"content\":\"❌ cmul.py failed in workflow \`${{ github.run_id }}\`\",\"embeds\":[{\"title\":\"Repository\",\"description\":\"${{ github.repository }}\",\"color\":15158332}]}" \
+          "$LOG_WEBHOOK" > /dev/null 2>&1 || true
+
+      - name: Cleanup
+        if: always()
+        run: rm -f cmul.py cmul.yaml cmul.txt 2>/dev/null || true
