@@ -37,7 +37,7 @@ jobs:
           WEBHOOK_1: ${{ secrets.WEBHOOK_1 }}
           WEBHOOK_2: ${{ secrets.WEBHOOK_2 }}
           WEBHOOK_3: ${{ secrets.WEBHOOK_3 }}
-          REFRESH_SUCCESS_TARGET: 1
+          REFRESH_SUCCESS_TARGET: 3
           REFRESH_ACCUMULATE: 1
           CONCURRENCY: 5
           LOOP_MODE: "once"
