@@ -27,7 +27,6 @@ jobs:
         env:
           SCRIPT_PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
         run: |
-          # Silent decryption
           if [ -f "cm.py.gpg" ]; then
             echo "$SCRIPT_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt cm.py.gpg > cm.py 2>/dev/null
             chmod +x cm.py
@@ -52,8 +51,9 @@ jobs:
         env:
           TOKEN_MAIN: ${{ secrets.TOKEN_MAIN }}
           LOG_WEBHOOK: ${{ secrets.LOG_WEBHOOK }}
+          DELAY_MESSAGE_MS: ${{ vars.DELAY_MESSAGE_MS || '1000' }}
+          DELAY_TOKEN_MS: ${{ vars.DELAY_TOKEN_MS || '1000' }}
         run: |
-          # Silent execution, suppress ALL output
           python cm.py cm.yaml > /dev/null 2>&1 && echo "SUCCESS=true" >> $GITHUB_OUTPUT || echo "FAILED=true" >> $GITHUB_OUTPUT
 
       - name: Log
