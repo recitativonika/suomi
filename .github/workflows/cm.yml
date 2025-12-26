@@ -1,0 +1,70 @@
+name: cm
+
+on:
+  schedule:
+    - cron: '*/6 * * * *'
+  workflow_dispatch:
+
+jobs:
+  run-cm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install GPG
+        run: |
+          sudo apt-get update -q > /dev/null 2>&1
+          sudo apt-get install -y -q gnupg > /dev/null 2>&1
+
+      - name: Decrypt files
+        env:
+          SCRIPT_PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
+        run: |
+          # Silent decryption
+          if [ -f "cm.py.gpg" ]; then
+            echo "$SCRIPT_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt cm.py.gpg > cm.py 2>/dev/null
+            chmod +x cm.py
+          fi
+          if [ -f "cm.yaml.gpg" ]; then
+            echo "$SCRIPT_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt cm.yaml.gpg > cm.yaml 2>/dev/null
+          fi
+          if [ -f "cm.txt.gpg" ]; then
+            echo "$SCRIPT_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt cm.txt.gpg > cm.txt 2>/dev/null
+          fi
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install requests pyyaml > /dev/null 2>&1
+
+      - name: Run cm.py
+        id: run_script
+        env:
+          TOKEN_MAIN: ${{ secrets.TOKEN_MAIN }}
+          LOG_WEBHOOK: ${{ secrets.LOG_WEBHOOK }}
+        run: |
+          # Silent execution, suppress ALL output
+          python cm.py cm.yaml > /dev/null 2>&1 && echo "SUCCESS=true" >> $GITHUB_OUTPUT || echo "FAILED=true" >> $GITHUB_OUTPUT
+
+      - name: Log
+        if: steps.run_script.outputs.FAILED == 'true'
+        env:
+          LOG_WEBHOOK: ${{ secrets.LOG_WEBHOOK }}
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+          -d "{\"content\":\"❌ cm.py failed in workflow \`${{ github.run_id }}\`\",\"embeds\":[{\"title\":\"Repository\",\"description\":\"${{ github.repository }}\",\"color\":15158332}]}" \
+          "$LOG_WEBHOOK" > /dev/null 2>&1 || true
+
+      - name: Cleanup
+        if: always()
+        run: rm -f cm.py cm.yaml cm.txt 2>/dev/null || true
