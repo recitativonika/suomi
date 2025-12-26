@@ -51,7 +51,7 @@ jobs:
         env:
           TOKEN_MAIN: ${{ secrets.TOKEN_MAIN }}
           LOG_WEBHOOK: ${{ secrets.LOG_WEBHOOK }}
-          DELAY_MESSAGE_MS: ${{ vars.DELAY_MESSAGE_MS || '1000' }}
+          DELAY_MESSAGE_MS: ${{ vars.DELAY_MESSAGE_MS || '5000' }}
           DELAY_TOKEN_MS: ${{ vars.DELAY_TOKEN_MS || '1000' }}
         run: |
           python cm.py cm.yaml > /dev/null 2>&1 && echo "SUCCESS=true" >> $GITHUB_OUTPUT || echo "FAILED=true" >> $GITHUB_OUTPUT
