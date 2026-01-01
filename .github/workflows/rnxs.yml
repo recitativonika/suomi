@@ -43,5 +43,6 @@ jobs:
           LOOP_MODE: "once"
           LOG_MODE: "logfull"
           SEND_DISCORD: 1
+          NID: nid.txt
         run: |
           ./rnxs.sh 1
