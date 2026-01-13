@@ -1,4 +1,4 @@
-name: Runner
+name: DW
 on:
   schedule:
     - cron: '*/20 * * * *'
