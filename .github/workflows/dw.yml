@@ -1,0 +1,31 @@
+name: Runner
+on:
+  schedule:
+    - cron: '*/20 * * * *'
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Python
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Decrypt files
+        env:
+          PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
+        run: |
+          echo "$PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --output dw.py --decrypt dw.py.gpg
+          echo "$PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --output dw.txt --decrypt dw.txt.gpg
+
+      - name: Execute script
+        run: |
+          python dw.py > /dev/null 2>&1
+
+      - name: Cleanup sensitive files
+        run: |
+          rm -f dw.py dw.txt
