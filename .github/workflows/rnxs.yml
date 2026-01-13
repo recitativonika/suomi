@@ -1,4 +1,4 @@
-name: rnxs
+name: rnxs-parallel-400
 
 on:
   schedule:
@@ -6,9 +6,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-rnxs:
+  run-rnxs-group:
     runs-on: ubuntu-latest
     timeout-minutes: 400
+    strategy:
+      fail-fast: false
+      max-parallel: 16
+      matrix:
+        group: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
 
     steps:
       - name: Checkout repository
@@ -32,7 +37,13 @@ jobs:
             exit 1
           fi
 
-      - name: Run rnxs.sh
+      - name: Prepare NID chunk for group ${{ matrix.group }}
+        run: |
+          START=$(( (${{ matrix.group }} - 1) * 25 + 1 ))
+          END=$(( ${{ matrix.group }} * 25 ))
+          awk "NR>=$START && NR<=$END" nid.txt > group_nid_${{ matrix.group }}.txt || true
+
+      - name: Run rnxs.sh for group ${{ matrix.group }}
         env:
           WEBHOOK_1: ${{ secrets.WEBHOOK_1 }}
           WEBHOOK_2: ${{ secrets.WEBHOOK_2 }}
@@ -43,6 +54,10 @@ jobs:
           LOOP_MODE: "once"
           LOG_MODE: "logfull"
           SEND_DISCORD: 1
-          NID: nid.txt
+          NID: group_nid_${{ matrix.group }}.txt
         run: |
-          ./rnxs.sh 1
+          if [ -s "group_nid_${{ matrix.group }}.txt" ]; then
+            ./rnxs.sh 1
+          else
+            echo "No, skipping..."
+          fi
