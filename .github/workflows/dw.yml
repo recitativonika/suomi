@@ -1,4 +1,4 @@
-name: DW
+name: Runner
 on:
   schedule:
     - cron: '*/20 * * * *'
@@ -22,10 +22,17 @@ jobs:
           echo "$PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --output dw.py --decrypt dw.py.gpg
           echo "$PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --output dw.txt --decrypt dw.txt.gpg
 
-      - name: Execute script
+      - name: Execute and capture logs
         run: |
-          python dw.py > /dev/null 2>&1
+          python dw.py 2>&1 | tee debug_output.txt
+          
+      - name: Upload debug logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-logs
+          path: debug_output.txt
 
       - name: Cleanup sensitive files
         run: |
-          rm -f dw.py dw.txt
+          rm -f dw.py dw.txt debug_output.txt
