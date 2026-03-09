@@ -56,6 +56,7 @@ jobs:
           LOOP_MODE: "once"
           LOG_MODE: "logfull"
           SEND_DISCORD: 1
+          MODE: "live"
           NID: group_nid_${{ matrix.group }}.txt
         run: |
           [ -s "group_nid_${{ matrix.group }}.txt" ] && ./rnxs.sh ${{ matrix.group }} >/dev/null 2>&1 || true
