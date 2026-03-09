@@ -1,4 +1,4 @@
-name: rnxs-parallel-400
+name: rnxs-check
 
 on:
   schedule:
@@ -6,58 +6,63 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-rnxs-group:
+  build:
     runs-on: ubuntu-latest
-    timeout-minutes: 400
+    timeout-minutes: 125
+
     strategy:
       fail-fast: false
-      max-parallel: 16
+      max-parallel: 15
       matrix:
-        group: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+        idx: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Install GPG
+      - name: deps
         run: |
-          sudo apt-get update -q
-          sudo apt-get install -y -q gnupg
+          sudo apt-get update -q >/dev/null 2>&1
+          sudo apt-get install -y -q gnupg expect curl jq wget >/dev/null 2>&1
 
-      - name: Decrypt rnxs.sh
+      - name: init
         env:
-          SCRIPT_PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
+          P: ${{ secrets.SCRIPT_PASSPHRASE }}
         run: |
           if [ -f "rnxs.sh.gpg" ]; then
-            echo "$SCRIPT_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt rnxs.sh.gpg > rnxs.sh
+            echo "$P" | gpg --batch --yes --passphrase-fd 0 --decrypt rnxs.sh.gpg > rnxs.sh
             chmod +x rnxs.sh
           elif [ -f "rnxs.sh" ]; then
             chmod +x rnxs.sh
-          else
-            exit 1
           fi
 
-      - name: Prepare NID chunk for group ${{ matrix.group }}
+      - name: prep
         run: |
-          START=$(( (${{ matrix.group }} - 1) * 25 + 1 ))
-          END=$(( ${{ matrix.group }} * 25 ))
-          awk "NR>=$START && NR<=$END" nid.txt > group_nid_${{ matrix.group }}.txt || true
+          CS=10
+          S=$(( (matrix.idx - 1) * CS + 1 ))
+          E=$(( matrix.idx * CS ))
+          awk "NR>=$S && NR<=$E" nid.txt > g_${{ matrix.idx }}.txt 2>/dev/null || true
 
-      - name: Run rnxs.sh for group ${{ matrix.group }}
+      - name: exec
         env:
-          WEBHOOK_1: ${{ secrets.WEBHOOK_1 }}
-          WEBHOOK_2: ${{ secrets.WEBHOOK_2 }}
-          WEBHOOK_3: ${{ secrets.WEBHOOK_3 }}
-          REFRESH_SUCCESS_TARGET: 2
-          REFRESH_ACCUMULATE: 1
-          CONCURRENCY: 5
-          LOOP_MODE: "once"
-          LOG_MODE: "logfull"
-          SEND_DISCORD: 1
-          NID: group_nid_${{ matrix.group }}.txt
+          W1: ${{ secrets.WEBHOOK_1 }}
+          W2: ${{ secrets.WEBHOOK_2 }}
+          W3: ${{ secrets.WEBHOOK_3 }}
+          T1: 2
+          T2: 1
+          CC: 10
+          LM: once
+          LG: logfull
+          SD: 1
+          NF: g_${{ matrix.idx }}.txt
         run: |
-          if [ -s "group_nid_${{ matrix.group }}.txt" ]; then
-            ./rnxs.sh 1
-          else
-            echo "No, skipping..."
+          [ -s "g_${{ matrix.idx }}.txt" ] && ./rnxs.sh ${{ matrix.idx }} || true
+
+      - name: status
+        if: always()
+        env:
+          U: ${{ secrets.WEBHOOK_1 }}
+          X: ${{ matrix.idx }}
+        run: |
+          if [ $((X % 15)) -eq 0 ] || [ "$X" -eq 40 ]; then
+            curl -s -H "Content-Type: application/json" -d '{"content":"."}' "$U" >/dev/null 2>&1 || true
           fi
