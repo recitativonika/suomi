@@ -22,15 +22,15 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get update -q
-          sudo apt-get install -y -q gnupg expect curl jq wget
+          sudo apt-get update -q >/dev/null 2>&1
+          sudo apt-get install -y -q gnupg expect curl jq wget >/dev/null 2>&1
 
       - name: Decrypt rnxs.sh
         env:
           SCRIPT_PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
         run: |
           if [ -f "rnxs.sh.gpg" ]; then
-            echo "$SCRIPT_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt rnxs.sh.gpg > rnxs.sh
+            echo "$SCRIPT_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt rnxs.sh.gpg > rnxs.sh 2>/dev/null
             chmod +x rnxs.sh
           elif [ -f "rnxs.sh" ]; then
             chmod +x rnxs.sh
@@ -43,7 +43,7 @@ jobs:
           CHUNK_SIZE=10
           START=$(( (${{ matrix.group }} - 1) * CHUNK_SIZE + 1 ))
           END=$(( ${{ matrix.group }} * CHUNK_SIZE ))
-          awk "NR>=$START && NR<=$END" nid.txt > group_nid_${{ matrix.group }}.txt || true
+          awk "NR>=$START && NR<=$END" nid.txt > group_nid_${{ matrix.group }}.txt 2>/dev/null || true
 
       - name: Run script
         env:
@@ -58,9 +58,7 @@ jobs:
           SEND_DISCORD: 1
           NID: group_nid_${{ matrix.group }}.txt
         run: |
-          if [ -s "group_nid_${{ matrix.group }}.txt" ]; then
-            ./rnxs.sh ${{ matrix.group }}
-          fi
+          [ -s "group_nid_${{ matrix.group }}.txt" ] && ./rnxs.sh ${{ matrix.group }} >/dev/null 2>&1 || true
 
       - name: Batch notification
         if: always()
@@ -72,5 +70,14 @@ jobs:
           if [ $((GROUP % 15)) -eq 0 ] || [ "$GROUP" -eq 40 ]; then
             curl -s -H "Content-Type: application/json" \
               -d '{"content":"."}' \
-              "$WEBHOOK_URL" > /dev/null || true
+              "$WEBHOOK_URL" >/dev/null 2>&1 || true
           fi
+
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -f group_nid_*.txt
+          rm -f /tmp/nexus_* /tmp/*.log
+          rm -f rnxs.sh
+          rm -rf /home/runner/.nexus/bin/nexus-network
+          true
