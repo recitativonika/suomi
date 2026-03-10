@@ -1,0 +1,70 @@
+name: AS
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  asf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 200
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Restore encrypted ASF state
+        id: cache-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: config
+          key: asf-encrypted-v4-${{ github.ref }}
+          restore-keys: asf-encrypted-v4-
+
+      - name: Install gpg
+        run: sudo apt-get update && sudo apt-get install -y gnupg
+
+      - name: Decrypt config files
+        env:
+          PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
+        run: |
+          cd config || mkdir -p config && cd config
+          for file in *.gpg; do
+            if [ -f "$file" ]; then
+              output="${file%.gpg}"
+              echo "Decrypting $file → $output"
+              gpg --batch --yes --passphrase "$PASSPHRASE" --decrypt --output "$output" "$file"
+            fi
+          done
+
+      - name: Run A
+        env:
+        run: |
+          timeout --preserve-status --signal=SIGTERM 10800s \
+            docker run --rm \
+              -v ${{ github.workspace }}/config:/app/config \
+              --name asf-temp \
+              ghcr.io/justarchinet/asf:latest \
+              --no-ui --headless --no-restart || true
+
+      - name: Re-encrypt
+        env:
+          PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
+        run: |
+          cd config
+          for file in *.json *.db; do
+            if [ -f "$file" ]; then
+              gpg --batch --yes --symmetric --cipher-algo AES256 \
+                --passphrase "$PASSPHRASE" --output "${file}.gpg" "$file"
+              # Optional
+              # rm -f "$file"
+            fi
+          done
+
+      - name: Save
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: config
+          key: asf-encrypted-v4-${{ github.ref }}
