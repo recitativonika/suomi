@@ -38,8 +38,7 @@ jobs:
             fi
           done
 
-      - name: Run A
-        env:
+      - name: Run
         run: |
           timeout --preserve-status --signal=SIGTERM 10800s \
             docker run --rm \
@@ -56,9 +55,7 @@ jobs:
           for file in *.json *.db; do
             if [ -f "$file" ]; then
               gpg --batch --yes --symmetric --cipher-algo AES256 \
-                --passphrase "$PASSPHRASE" --output "${file}.gpg" "$file"
-              # Optional
-              # rm -f "$file"
+                --passphrase "$$   PASSPHRASE" --output "   $${file}.gpg" "$file"
             fi
           done
 
