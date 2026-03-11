@@ -71,7 +71,7 @@ jobs:
               -v ${{ github.workspace }}/config:/app/config \
               -v ${{ github.workspace }}/plugins:/app/plugins \
               justarchi/archisteamfarm:latest \
-              --no-ui --headless --no-restart 2>&1 | tee asf_log.txt || true
+              --no-ui --headless --no-restart 2>&1 | grep --line-buffered -vE "═|█|╔|╚|║|ASFEnhance|插件作者|爱发电|未加载外部模块|====|Pulling from|Pulling fs layer|Waiting|Verifying Checksum|Download complete|Pull complete|Digest:|Status: Downloaded" | tee asf_log.txt || true
 
           kill $LOGGER_PID || true
 
