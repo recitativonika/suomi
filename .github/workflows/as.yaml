@@ -1,15 +1,12 @@
-name: AFARM
-
+name: AFARM Daily Idle
 on:
   schedule:
-    - cron: '0 2 * * *'          # jam 02:00 WIB tiap hari
+    - cron: '0 2 * * *'
   workflow_dispatch:
-
 jobs:
   afarm:
     runs-on: ubuntu-latest
     timeout-minutes: 200
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -41,9 +38,34 @@ jobs:
             gpg --batch --yes --passphrase "$PASSPHRASE" --decrypt --output "$output" "$file" || echo "Decrypt failed for $file"
           done
 
-      - name: Run AFARM
+      - name: Run AFARM and Send Live Logs to Discord
         id: run_asf
+        env:
+          WEBHOOK_URL: ${{ secrets.ASF_WEBHOOK_DISCORD }}
         run: |
+          touch asf_log.txt
+
+          (
+            last_line=0
+            while true; do
+              sleep 60
+              current_line=$(wc -l < asf_log.txt)
+              
+              if [ "$current_line" -gt "$last_line" ]; then
+                tail -n +$((last_line + 1)) asf_log.txt > temp_chunk.txt
+                last_line=$current_line
+                
+                head -c 1800 temp_chunk.txt > final_chunk.txt
+                
+                jq -Rs --arg prefix "**Live AFARM Log** (Run: ${{ github.run_id }})" \
+                  '{content: ($prefix + "\n```text\n" + . + "\n```")}' final_chunk.txt > payload.json
+                
+                curl -s -H "Content-Type: application/json" -X POST -d @payload.json "$WEBHOOK_URL" || true
+              fi
+            done
+          ) & 
+          LOGGER_PID=$!
+
           timeout --preserve-status --signal=SIGTERM 10800s \
             docker run --rm \
               -v ${{ github.workspace }}/config:/app/config \
@@ -51,31 +73,10 @@ jobs:
               justarchi/archisteamfarm:latest \
               --no-ui --headless --no-restart 2>&1 | tee asf_log.txt || true
 
-      - name: Send AFARM 
-        if: always()
-        env:
-          WEBHOOK_URL: ${{ secrets.ASF_WEBHOOK_DISCORD }}
-        run: |
-          if [ ! -f asf_log.txt ]; then
-            echo "No log file found, skipping Discord send."
-            exit 0
-          fi
-
-          split -b 1900k asf_log.txt log_chunk_
-
-          for chunk in log_chunk_*; do
-            if [ -s "$chunk" ]; then
-              LOG_CONTENT=$(cat "$chunk" | sed 's/"/\\"/g' | tr '\n' '\\n')
-              curl -H "Content-Type: application/json" \
-                -X POST \
-                -d "{\"content\": \"**AFARM Log Part** (Run: ${{ github.run_id }})\n\`\`\`\\n${LOG_CONTENT}\n\`\`\`\"}" \
-                "$WEBHOOK_URL" || echo "Failed to send chunk $chunk"
-            fi
-          done
-
-          rm -f log_chunk_* asf_log.txt
+          kill $LOGGER_PID || true
 
       - name: Re-encrypt config files (only if files exist)
+        if: always()
         env:
           PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
         run: |
