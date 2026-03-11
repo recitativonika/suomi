@@ -1,4 +1,4 @@
-name: AFARM Daily Idle
+name: AFARM
 on:
   schedule:
     - cron: '0 2 * * *'
