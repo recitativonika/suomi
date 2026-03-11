@@ -2,7 +2,7 @@ name: AFARM
 
 on:
   schedule:
-    - cron: '0 2 * * *'  # 02:00 WIB daily
+    - cron: '0 2 * * *'          # jam 02:00 WIB tiap hari
   workflow_dispatch:
 
 jobs:
@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 200
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Restore encrypted ASF state
@@ -22,14 +22,14 @@ jobs:
           key: asf-encrypted-v4-${{ github.ref }}
           restore-keys: asf-encrypted-v4-
 
-      - name: Ensure directories exist
+      - name: Ensure config and plugins directories exist
         run: |
           mkdir -p config plugins
 
-      - name: Install required tools
+      - name: Install gpg and jq
         run: sudo apt-get update && sudo apt-get install -y gnupg jq
 
-      - name: Decrypt config files (if present)
+      - name: Decrypt config files (if any)
         env:
           PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
         run: |
@@ -44,57 +44,38 @@ jobs:
       - name: Run AFARM
         id: run_asf
         run: |
-          # Run in background to allow docker logs capture
-          CONTAINER_NAME="afarm-$(date +%s)"
           timeout --preserve-status --signal=SIGTERM 10800s \
             docker run --rm \
-              --name "$CONTAINER_NAME" \
               -v ${{ github.workspace }}/config:/app/config \
               -v ${{ github.workspace }}/plugins:/app/plugins \
               justarchi/archisteamfarm:latest \
-              --no-ui --headless --no-restart > asf_stdout.txt 2> asf_stderr.txt &
-          
-          # Wait for timeout or natural exit
-          wait || true
-          
-          # Capture full logs from container (more reliable)
-          docker logs "$CONTAINER_NAME" > asf_full_log.txt 2>&1 || true
-          
-          # Combine for sending
-          cat asf_stdout.txt asf_stderr.txt asf_full_log.txt > asf_log.txt || true
+              --no-ui --headless --no-restart 2>&1 | tee asf_log.txt || true
 
-      - name: Send AFARM Logs to Discord
+      - name: Send AFARM 
         if: always()
         env:
           WEBHOOK_URL: ${{ secrets.ASF_WEBHOOK_DISCORD }}
         run: |
-          if [ ! -s asf_log.txt ]; then
-            # Fallback if empty: send a summary
-            curl -H "Content-Type: application/json" \
-              -X POST \
-              -d "{\"content\": \"**AFARM Run ${{ github.run_id }}**: No detailed logs captured (possibly empty run or capture issue). Check workflow for details.\"}" \
-              "$WEBHOOK_URL" || echo "Fallback message failed"
+          if [ ! -f asf_log.txt ]; then
+            echo "No log file found, skipping Discord send."
             exit 0
           fi
 
-          # Split into chunks (max ~1900 chars)
           split -b 1900k asf_log.txt log_chunk_
 
-          PART=1
           for chunk in log_chunk_*; do
             if [ -s "$chunk" ]; then
               LOG_CONTENT=$(cat "$chunk" | sed 's/"/\\"/g' | tr '\n' '\\n')
               curl -H "Content-Type: application/json" \
                 -X POST \
-                -d "{\"content\": \"**AFARM Log Part ${PART}** (Run: ${{ github.run_id }})\n\`\`\`\\n${LOG_CONTENT}\n\`\`\`\"}" \
-                "$WEBHOOK_URL" && echo "Sent part ${PART}" || echo "Failed to send part ${PART}"
-              PART=$((PART + 1))
+                -d "{\"content\": \"**AFARM Log Part** (Run: ${{ github.run_id }})\n\`\`\`\\n${LOG_CONTENT}\n\`\`\`\"}" \
+                "$WEBHOOK_URL" || echo "Failed to send chunk $chunk"
             fi
           done
 
-          rm -f log_chunk_* asf_*.txt
+          rm -f log_chunk_* asf_log.txt
 
-      - name: Re-encrypt config files (if present)
+      - name: Re-encrypt config files (only if files exist)
         env:
           PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
         run: |
