@@ -45,6 +45,11 @@ jobs:
         run: |
           touch asf_log.txt
 
+          START_TIME=$(TZ='Asia/Jakarta' date +'(%d/%m/%Y) %I:%M %p GMT+7')
+          jq -n --arg content "**Webhook AFARM started** $START_TIME" '{content: $content}' > start_payload.json
+          curl -s -H "Content-Type: application/json" -X POST -d @start_payload.json "$WEBHOOK_URL" > /dev/null || true
+          rm -f start_payload.json
+
           (
             last_line=0
             while true; do
