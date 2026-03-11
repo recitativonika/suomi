@@ -55,12 +55,18 @@ jobs:
                 tail -n +$((last_line + 1)) asf_log.txt > temp_chunk.txt
                 last_line=$current_line
                 
-                head -c 1800 temp_chunk.txt > final_chunk.txt
+                split -C 1800 temp_chunk.txt log_part_
                 
-                jq -Rs --arg prefix "**Live AFARM Log** (Run: ${{ github.run_id }})" \
-                  '{content: ($prefix + "\n```text\n" + . + "\n```")}' final_chunk.txt > payload.json
-                
-                curl -s -H "Content-Type: application/json" -X POST -d @payload.json "$WEBHOOK_URL" > /dev/null || true
+                for part in log_part_*; do
+                  if [ -s "$part" ]; then
+                    jq -Rs --arg prefix "**Live AFARM Log** (Run: ${{ github.run_id }})" \
+                      '{content: ($prefix + "\n```text\n" + . + "\n```")}' "$part" > payload.json
+                    
+                    curl -s -H "Content-Type: application/json" -X POST -d @payload.json "$WEBHOOK_URL" > /dev/null || true
+                    sleep 2
+                  fi
+                done
+                rm -f log_part_* temp_chunk.txt payload.json
               fi
             done
           ) & 
