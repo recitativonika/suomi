@@ -1,12 +1,12 @@
 name: AFARM
 on:
   schedule:
-    - cron: '0 2 * * *'
+    - cron: '0 12 * * *'
   workflow_dispatch:
 jobs:
   afarm:
     runs-on: ubuntu-latest
-    timeout-minutes: 200
+    timeout-minutes: 360
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -77,7 +77,7 @@ jobs:
           ) & 
           LOGGER_PID=$!
 
-          timeout --preserve-status --signal=SIGTERM 10800s \
+          timeout --preserve-status --signal=SIGTERM 21600s \
             docker run --rm \
               -v ${{ github.workspace }}/config:/app/config \
               -v ${{ github.workspace }}/plugins:/app/plugins \
