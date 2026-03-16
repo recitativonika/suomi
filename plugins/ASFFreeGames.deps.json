@@ -1,0 +1,1230 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "ASFFreeGames/1.9.0.0": {
+        "dependencies": {
+          "ArchiSteamFarm": "6.1.3.3",
+          "ConfigureAwaitChecker.Analyzer": "5.0.0",
+          "JetBrains.Annotations": "2024.3.0",
+          "NLog": "5.4.0",
+          "SteamKit2": "3.0.2",
+          "System.Composition.AttributedModel": "9.0.2"
+        },
+        "runtime": {
+          "ASFFreeGames.dll": {}
+        }
+      },
+      "AngleSharp/1.2.0": {},
+      "AngleSharp.XPath/2.0.5": {
+        "dependencies": {
+          "AngleSharp": "1.2.0"
+        }
+      },
+      "ConfigureAwaitChecker.Analyzer/5.0.0": {},
+      "CryptSharpStandard/1.0.0": {},
+      "Humanizer/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core.af": "3.0.0-beta.54",
+          "Humanizer.Core.ar": "3.0.0-beta.54",
+          "Humanizer.Core.az": "3.0.0-beta.54",
+          "Humanizer.Core.bg": "3.0.0-beta.54",
+          "Humanizer.Core.bn-BD": "3.0.0-beta.54",
+          "Humanizer.Core.cs": "3.0.0-beta.54",
+          "Humanizer.Core.da": "3.0.0-beta.54",
+          "Humanizer.Core.de": "3.0.0-beta.54",
+          "Humanizer.Core.el": "3.0.0-beta.54",
+          "Humanizer.Core.es": "3.0.0-beta.54",
+          "Humanizer.Core.fa": "3.0.0-beta.54",
+          "Humanizer.Core.fi-FI": "3.0.0-beta.54",
+          "Humanizer.Core.fr": "3.0.0-beta.54",
+          "Humanizer.Core.fr-BE": "3.0.0-beta.54",
+          "Humanizer.Core.he": "3.0.0-beta.54",
+          "Humanizer.Core.hr": "3.0.0-beta.54",
+          "Humanizer.Core.hu": "3.0.0-beta.54",
+          "Humanizer.Core.hy": "3.0.0-beta.54",
+          "Humanizer.Core.id": "3.0.0-beta.54",
+          "Humanizer.Core.is": "3.0.0-beta.54",
+          "Humanizer.Core.it": "3.0.0-beta.54",
+          "Humanizer.Core.ja": "3.0.0-beta.54",
+          "Humanizer.Core.ko-KR": "3.0.0-beta.54",
+          "Humanizer.Core.ku": "3.0.0-beta.54",
+          "Humanizer.Core.lb": "3.0.0-beta.54",
+          "Humanizer.Core.lt": "3.0.0-beta.54",
+          "Humanizer.Core.lv": "3.0.0-beta.54",
+          "Humanizer.Core.ms-MY": "3.0.0-beta.54",
+          "Humanizer.Core.mt": "3.0.0-beta.54",
+          "Humanizer.Core.nb": "3.0.0-beta.54",
+          "Humanizer.Core.nb-NO": "3.0.0-beta.54",
+          "Humanizer.Core.nl": "3.0.0-beta.54",
+          "Humanizer.Core.pl": "3.0.0-beta.54",
+          "Humanizer.Core.pt": "3.0.0-beta.54",
+          "Humanizer.Core.ro": "3.0.0-beta.54",
+          "Humanizer.Core.ru": "3.0.0-beta.54",
+          "Humanizer.Core.sk": "3.0.0-beta.54",
+          "Humanizer.Core.sl": "3.0.0-beta.54",
+          "Humanizer.Core.sr": "3.0.0-beta.54",
+          "Humanizer.Core.sr-Latn": "3.0.0-beta.54",
+          "Humanizer.Core.sv": "3.0.0-beta.54",
+          "Humanizer.Core.th-TH": "3.0.0-beta.54",
+          "Humanizer.Core.tr": "3.0.0-beta.54",
+          "Humanizer.Core.uk": "3.0.0-beta.54",
+          "Humanizer.Core.uz-Cyrl-UZ": "3.0.0-beta.54",
+          "Humanizer.Core.uz-Latn-UZ": "3.0.0-beta.54",
+          "Humanizer.Core.vi": "3.0.0-beta.54",
+          "Humanizer.Core.zh-CN": "3.0.0-beta.54",
+          "Humanizer.Core.zh-Hans": "3.0.0-beta.54",
+          "Humanizer.Core.zh-Hant": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core/3.0.0-beta.54": {
+        "dependencies": {
+          "System.Memory": "4.5.5",
+          "System.ValueTuple": "4.5.0"
+        }
+      },
+      "Humanizer.Core.af/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.ar/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.az/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.bg/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.bn-BD/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.cs/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.da/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.de/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.el/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.es/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.fa/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.fi-FI/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.fr/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.fr-BE/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.he/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.hr/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.hu/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.hy/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.id/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.is/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.it/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.ja/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.ko-KR/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.ku/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.lb/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.lt/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.lv/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.ms-MY/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.mt/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.nb/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.nb-NO/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.nl/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.pl/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.pt/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.ro/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.ru/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.sk/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.sl/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.sr/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.sr-Latn/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.sv/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.th-TH/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.tr/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.uk/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.uz-Cyrl-UZ/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.uz-Latn-UZ/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.vi/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.zh-CN/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.zh-Hans/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "Humanizer.Core.zh-Hant/3.0.0-beta.54": {
+        "dependencies": {
+          "Humanizer.Core": "3.0.0-beta.54"
+        }
+      },
+      "JetBrains.Annotations/2024.3.0": {},
+      "Markdig.Signed/0.40.0": {},
+      "Microsoft.AspNetCore.OpenApi/9.0.2": {
+        "dependencies": {
+          "Microsoft.OpenApi": "1.6.17"
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {},
+      "Microsoft.Extensions.Configuration.Abstractions/8.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "8.0.0"
+        }
+      },
+      "Microsoft.Extensions.DependencyInjection/8.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2"
+        }
+      },
+      "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.2": {},
+      "Microsoft.Extensions.Logging/8.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection": "8.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.2",
+          "Microsoft.Extensions.Options": "8.0.0"
+        }
+      },
+      "Microsoft.Extensions.Logging.Abstractions/8.0.2": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2"
+        }
+      },
+      "Microsoft.Extensions.Options/8.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2",
+          "Microsoft.Extensions.Primitives": "8.0.0"
+        }
+      },
+      "Microsoft.Extensions.Primitives/8.0.0": {},
+      "Microsoft.IdentityModel.Abstractions/8.6.0": {},
+      "Microsoft.IdentityModel.JsonWebTokens/8.6.0": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Tokens": "8.6.0"
+        }
+      },
+      "Microsoft.IdentityModel.Logging/8.6.0": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Abstractions": "8.6.0"
+        }
+      },
+      "Microsoft.IdentityModel.Tokens/8.6.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.2",
+          "Microsoft.IdentityModel.Logging": "8.6.0"
+        }
+      },
+      "Microsoft.NETCore.Platforms/5.0.0": {},
+      "Microsoft.OpenApi/1.6.17": {},
+      "Microsoft.Win32.Registry/5.0.0": {
+        "dependencies": {
+          "System.Security.AccessControl": "5.0.0",
+          "System.Security.Principal.Windows": "5.0.0"
+        }
+      },
+      "Nito.AsyncEx.Coordination/5.1.2": {
+        "dependencies": {
+          "Nito.AsyncEx.Tasks": "5.1.2",
+          "Nito.Collections.Deque": "1.1.1"
+        }
+      },
+      "Nito.AsyncEx.Tasks/5.1.2": {
+        "dependencies": {
+          "Nito.Disposables": "2.2.1"
+        }
+      },
+      "Nito.Collections.Deque/1.1.1": {},
+      "Nito.Disposables/2.2.1": {
+        "dependencies": {
+          "System.Collections.Immutable": "7.0.0"
+        }
+      },
+      "NLog/5.4.0": {
+        "runtime": {
+          "lib/netstandard2.0/NLog.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.4.0.3182"
+          }
+        }
+      },
+      "NLog.Extensions.Logging/5.4.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Logging": "8.0.0",
+          "NLog": "5.4.0"
+        }
+      },
+      "NLog.Web.AspNetCore/5.4.0": {
+        "dependencies": {
+          "NLog.Extensions.Logging": "5.4.0"
+        }
+      },
+      "protobuf-net/3.2.46": {
+        "dependencies": {
+          "protobuf-net.Core": "3.2.46"
+        },
+        "runtime": {
+          "lib/net8.0/protobuf-net.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.2.46.62819"
+          }
+        }
+      },
+      "protobuf-net.Core/3.2.46": {
+        "dependencies": {
+          "System.Collections.Immutable": "7.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/protobuf-net.Core.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.2.46.62819"
+          }
+        }
+      },
+      "SteamKit2/3.0.2": {
+        "dependencies": {
+          "Microsoft.Win32.Registry": "5.0.0",
+          "System.IO.Hashing": "9.0.1",
+          "protobuf-net": "3.2.46"
+        },
+        "runtime": {
+          "lib/net8.0/SteamKit2.dll": {
+            "assemblyVersion": "3.0.2.0",
+            "fileVersion": "3.0.2.0"
+          }
+        }
+      },
+      "Swashbuckle.AspNetCore.SwaggerUI/7.2.0": {},
+      "System.Collections.Immutable/7.0.0": {},
+      "System.Composition/9.0.2": {
+        "dependencies": {
+          "System.Composition.AttributedModel": "9.0.2",
+          "System.Composition.Convention": "9.0.2",
+          "System.Composition.Hosting": "9.0.2",
+          "System.Composition.Runtime": "9.0.2",
+          "System.Composition.TypedParts": "9.0.2"
+        }
+      },
+      "System.Composition.AttributedModel/9.0.2": {},
+      "System.Composition.Convention/9.0.2": {
+        "dependencies": {
+          "System.Composition.AttributedModel": "9.0.2"
+        }
+      },
+      "System.Composition.Hosting/9.0.2": {
+        "dependencies": {
+          "System.Composition.Runtime": "9.0.2"
+        }
+      },
+      "System.Composition.Runtime/9.0.2": {},
+      "System.Composition.TypedParts/9.0.2": {
+        "dependencies": {
+          "System.Composition.AttributedModel": "9.0.2",
+          "System.Composition.Hosting": "9.0.2",
+          "System.Composition.Runtime": "9.0.2"
+        }
+      },
+      "System.IO.Hashing/9.0.1": {
+        "runtime": {
+          "lib/net9.0/System.IO.Hashing.dll": {
+            "assemblyVersion": "9.0.0.1",
+            "fileVersion": "9.0.124.61010"
+          }
+        }
+      },
+      "System.Linq.Async/6.0.1": {
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0"
+        }
+      },
+      "System.Memory/4.5.5": {},
+      "System.Security.AccessControl/5.0.0": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "5.0.0",
+          "System.Security.Principal.Windows": "5.0.0"
+        }
+      },
+      "System.Security.Cryptography.ProtectedData/9.0.2": {},
+      "System.Security.Principal.Windows/5.0.0": {},
+      "System.ValueTuple/4.5.0": {}
+    }
+  },
+  "libraries": {
+    "ASFFreeGames/1.9.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AngleSharp/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-uF/PzSCVcb+b2nqVvHZbOqexoJ9R6QLjonugPf0PQl+0h7YKaFZeXyspctbHe5HGlx7/Iuk5BErtk+t63ac/ZA==",
+      "path": "anglesharp/1.2.0",
+      "hashPath": "anglesharp.1.2.0.nupkg.sha512"
+    },
+    "AngleSharp.XPath/2.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6JCexqmpI8zxVZHyA4hjs5raQ9H6W5VAkawWFLBTMkmSjz+xmaCMrtFoyUCdCAs9A/6Ykvfvieliu54vHHC33Q==",
+      "path": "anglesharp.xpath/2.0.5",
+      "hashPath": "anglesharp.xpath.2.0.5.nupkg.sha512"
+    },
+    "ConfigureAwaitChecker.Analyzer/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pjcOCf0VNCG6R1oGm38YbhHMtcOgkieyCXyB3Fb5GUQzUfujPUtwrATGXwv7re4Zod4SAF3pr5rjqzu4HIEerw==",
+      "path": "configureawaitchecker.analyzer/5.0.0",
+      "hashPath": "configureawaitchecker.analyzer.5.0.0.nupkg.sha512"
+    },
+    "CryptSharpStandard/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-akj9OBARl2RYOkle562FRM672oMe+pf95fYBqX4MkRL3wx3nQubhP/dvTBxxkgwiTB3OP2vxa1xm4Vilvq11uw==",
+      "path": "cryptsharpstandard/1.0.0",
+      "hashPath": "cryptsharpstandard.1.0.0.nupkg.sha512"
+    },
+    "Humanizer/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4XxUcpPsT3jWs/3J4BsxoD6/Uzt8ZKNkhJZjC4OO2KsIpbuiziy+WPtsqdru01/bQVELCmdGXuAIwHVUgdPdng==",
+      "path": "humanizer/3.0.0-beta.54",
+      "hashPath": "humanizer.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-V1LqoHpfgEUoYJHiboaL6rZS/Wfr/K7xlsL0/SjwWtuFtV1d3bV8sTEPjURHmfxySND8KgQex5WuuuwMBraDog==",
+      "path": "humanizer.core/3.0.0-beta.54",
+      "hashPath": "humanizer.core.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.af/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-NHoTQrI7hKS0zzsiHwlUeP1ZWmKA71AC1L7y+W1A6fOeRb2n7Fwwtapz8AKsi9TZVtxCNM2gCqdsMN/u6pMZ1g==",
+      "path": "humanizer.core.af/3.0.0-beta.54",
+      "hashPath": "humanizer.core.af.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.ar/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BXxFYZKNAXZsPpHKT/L+WbqMIktlmzrndBwMJOhajYVRIS8JFpFkiDAw0VhhJ0sPP528Ivs5WnjqrrtcYHklcg==",
+      "path": "humanizer.core.ar/3.0.0-beta.54",
+      "hashPath": "humanizer.core.ar.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.az/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-acJfaDiv5QkoftbKRBUl3FNWAw1uz6Z3WpU48EFR/sHyy3/bQFD6oHP5B+ewZegAW938/j7pWQYyJtRwJZwlOQ==",
+      "path": "humanizer.core.az/3.0.0-beta.54",
+      "hashPath": "humanizer.core.az.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.bg/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lzcSr8EzzzUHUWMWnNlw7oo7ZvLVa/V3YBLFSHPvv842h0qht13eYVBv//QHfFVQCwsL99GcwECU026Er3FFRA==",
+      "path": "humanizer.core.bg/3.0.0-beta.54",
+      "hashPath": "humanizer.core.bg.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.bn-BD/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QbzuLmnmlngqlxbJMjjm7yv17ENabZ+XSVC3ATiC6nM2fauBqJLzSxpSKNx0Jr1LY8eChmCDmQJ50Y8Y9EA2Xw==",
+      "path": "humanizer.core.bn-bd/3.0.0-beta.54",
+      "hashPath": "humanizer.core.bn-bd.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.cs/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lNx3SEDm5ZHzrlSxZwKLgd+xmAw4bIluzckEOws+WV6b3cD1H7eUCT+zsXceywitzLcTfHjRBAN/XQILPVm0Bg==",
+      "path": "humanizer.core.cs/3.0.0-beta.54",
+      "hashPath": "humanizer.core.cs.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.da/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ljLPb2PpDHKbfsl0u+MkN9iJ/3AmLjTg2og16fY7IIokZaH5cl+uXsYp44CDuHnK0nxnuYloMMxfwBJe8nG+Mg==",
+      "path": "humanizer.core.da/3.0.0-beta.54",
+      "hashPath": "humanizer.core.da.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.de/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ce4aDvzwp8APC3GygK2wPa1kIZK+AsNVqSfSWwATT13AmmDyXYJmBPRdZbUBo/iCcodueCSy1IKLkhoOd5056w==",
+      "path": "humanizer.core.de/3.0.0-beta.54",
+      "hashPath": "humanizer.core.de.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.el/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hVeHXWIRcoPEOLcNRq4EtWj4n14Z/2ETSAtR9OepUJhsuxskeuwH9vrb7OlAc+OkGzyUdiJZQNKelRzmRee5Lw==",
+      "path": "humanizer.core.el/3.0.0-beta.54",
+      "hashPath": "humanizer.core.el.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.es/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-74zWmT5LHFgwwQJW2Ycw7b91sIxUoQJ4wj6rAd4FSXIHqUUB43hOeWYLHjlDaUaYb4UcELq7TYzN4aqn84sHOg==",
+      "path": "humanizer.core.es/3.0.0-beta.54",
+      "hashPath": "humanizer.core.es.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.fa/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bVcgpGYEEoGLbythJxvZ/QkV6gj1jYAU20bGSjhN4JGvfj+rn+6Ajj7/jf2z97cXC/tcxrYpjU01+RTAco3dVg==",
+      "path": "humanizer.core.fa/3.0.0-beta.54",
+      "hashPath": "humanizer.core.fa.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.fi-FI/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GEmaznIjXmKEfTouW1gSRrU/J5k1QYp5nHkAOWXPxzsU0J6fAkuaIz+PoZ6sCBZB2EazaBlJlTu0Aqh3G9ZpPQ==",
+      "path": "humanizer.core.fi-fi/3.0.0-beta.54",
+      "hashPath": "humanizer.core.fi-fi.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.fr/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-MZIH9UOicW8plJA31mVRwthF0QVMr6V/gfhSTqXCW1CYbqhnTPAixyqfPGiemX4CXGJL034b4MoRc7QtuyUZ3g==",
+      "path": "humanizer.core.fr/3.0.0-beta.54",
+      "hashPath": "humanizer.core.fr.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.fr-BE/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tgbLa3w6j1gZCIaKnmw+DvRCm/lX6w+tl3z5/a+egTX6n810vApa65fXWggPDJs/9glPXjXu+n/y3oelvGvAAQ==",
+      "path": "humanizer.core.fr-be/3.0.0-beta.54",
+      "hashPath": "humanizer.core.fr-be.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.he/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-X3vPZaWn7PE1gC41XIkuDGAKbg+khD4M3aAlPVcsBB1R4rzkANy5iK/KFvWDF8c0YztMhVDq2VUI28KHvMbMUg==",
+      "path": "humanizer.core.he/3.0.0-beta.54",
+      "hashPath": "humanizer.core.he.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.hr/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-SCABQoW32oMQm8Ot3Gqx3WnEELEC1iVl8hmHk/DTwJgugid9tTtueQ5++/q2xAbzhXxZGtrV77Fba0kuR4cRCQ==",
+      "path": "humanizer.core.hr/3.0.0-beta.54",
+      "hashPath": "humanizer.core.hr.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.hu/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-I25p2WQSB6P5e7qiZ+mS7jWES3QLQN/C0jC/Uo3r5EEQsPC6m/IhS909FwuH+875xHIbQ2VpgYJfdIzs5oMEiw==",
+      "path": "humanizer.core.hu/3.0.0-beta.54",
+      "hashPath": "humanizer.core.hu.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.hy/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OCzdrX+5zmVbt0qwhpgZguz16CKp+0ZYDet1J+DZcyqUB2J0+aSCRNrTAFYmTfbEX/ShqPMvjmIdqR4wQPiLRA==",
+      "path": "humanizer.core.hy/3.0.0-beta.54",
+      "hashPath": "humanizer.core.hy.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.id/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bgQb9HDH7fz/Hi2nwFcVVhSldK5/nKNih1dSlgG/1S/+FiSjra2lTGaIPGr9voUnmcjuHbyGKSnB+W462o3I4A==",
+      "path": "humanizer.core.id/3.0.0-beta.54",
+      "hashPath": "humanizer.core.id.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.is/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2+P3FpRrDb6ZRLcNv4ipX4l4FqB2KF0+oTeVTSEZvsFzLyIO7NnviEwTzwrJ0LmkQCuDB2ClvMMjadBNCoP2EQ==",
+      "path": "humanizer.core.is/3.0.0-beta.54",
+      "hashPath": "humanizer.core.is.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.it/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xhHqmO03mWH0Y2zPkW9HtWmSZWeaQPuuG3wjCSmWfivxbzY5S5p/hsh3WewAQahcu54F5kNrVH4AOIdUDmtIQw==",
+      "path": "humanizer.core.it/3.0.0-beta.54",
+      "hashPath": "humanizer.core.it.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.ja/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-jkNbPS7S7tTXfOHuC/zlmk/3S5tH/ykV0M29QhE0CA3p2nYZpWescO1QI75QdKCtR1H3zHHp1mopIH09VF60PQ==",
+      "path": "humanizer.core.ja/3.0.0-beta.54",
+      "hashPath": "humanizer.core.ja.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.ko-KR/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8uGnXlfu0xUDfxZG3fux+ipRs3zrPqDnXwa7V7u3C+bq6VZz/Wt1unKKpvL5ID8/shQpm5PLTX1XeD8eQSyj4Q==",
+      "path": "humanizer.core.ko-kr/3.0.0-beta.54",
+      "hashPath": "humanizer.core.ko-kr.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.ku/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-uWCrvBN9XCuYEhaQ6/3zTVc+sWE0eZjZRd9TXS6qdAurTpBZ0Hh4Do5BbhkElKfzEy7SPoFunH0axPFnHUahaA==",
+      "path": "humanizer.core.ku/3.0.0-beta.54",
+      "hashPath": "humanizer.core.ku.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.lb/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RQ6efuxxi3BUZiS9ve+/U8Tu7N/RVnI2c4GKDdwO3JhoaMxGEVZrIq2H8DJovnRAdT5DbFY6nEAIzyCs60nHsA==",
+      "path": "humanizer.core.lb/3.0.0-beta.54",
+      "hashPath": "humanizer.core.lb.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.lt/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zr61xnEX2/Wss26ZcbiyHEMfJyTSe0VOUPLgC+yp/FKrFoXuxFnWQ5Ja8Z4zF4bixqcak8jWl47wLRiJmX+bow==",
+      "path": "humanizer.core.lt/3.0.0-beta.54",
+      "hashPath": "humanizer.core.lt.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.lv/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-iiCAFXJkXwd2ezryg4sfHgXXjcRi1ke8yMVGnRBknQIX2KlLGHTL3YEC+5G6ToKwmWWo4ocHSzyw/2eTIxx8/Q==",
+      "path": "humanizer.core.lv/3.0.0-beta.54",
+      "hashPath": "humanizer.core.lv.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.ms-MY/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-v8fgU93zsnk3+FnThj9o09wVvb2WNpOO+Rgp9ryjSlIvqRSoLTe6eAAcz2naK1CoEOXZQtfuLUAjtAuaNuoiPw==",
+      "path": "humanizer.core.ms-my/3.0.0-beta.54",
+      "hashPath": "humanizer.core.ms-my.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.mt/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9HgFoa++6HuuH3RWmMiDKUfP2/iW1s3Okdk5dD5vVVT3sVbxif/fhgGInqHxX9din/CJt/rGhMvXacF+pyfylw==",
+      "path": "humanizer.core.mt/3.0.0-beta.54",
+      "hashPath": "humanizer.core.mt.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.nb/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5/I+swJdrdj52LgQ/TX0cJtfLP5c2Jwpq4gO9qjafioS9mJSi+3Ak4B5U0LThyx9banqWq38YMNqhpg2gbIueQ==",
+      "path": "humanizer.core.nb/3.0.0-beta.54",
+      "hashPath": "humanizer.core.nb.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.nb-NO/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-t79OsGPBnaqNzDqnc0piSKN/CckhMQ3Yv3rfJGFODBWg5k3uoPF0v2CuN/QwDhZzh3RQPTSWpjD5KBzvQzmr6Q==",
+      "path": "humanizer.core.nb-no/3.0.0-beta.54",
+      "hashPath": "humanizer.core.nb-no.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.nl/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8ew8Y+31i/jSgx445c94AkGK6NLkd8+ki6uXZU04nZGivGEn2shoAGaHYiOEOQYQP2wm/jD+6vwEvfs6woVK3g==",
+      "path": "humanizer.core.nl/3.0.0-beta.54",
+      "hashPath": "humanizer.core.nl.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.pl/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0VJOIT3cw78+i+sQir4Hn8U6MnCW3NL8g4qCP2nclm5tI6kmsUPnSiPXLbaPNMRt/60fpvfEcNvVCRfy29MVkA==",
+      "path": "humanizer.core.pl/3.0.0-beta.54",
+      "hashPath": "humanizer.core.pl.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.pt/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1amzDtByedJqkUUIb2jcsBVfnIy9tTEfP3Nak07O1FWEI5wyRO0ghf1BPumcdj5Hb0CQyWpLJeMyyx4zALlN0w==",
+      "path": "humanizer.core.pt/3.0.0-beta.54",
+      "hashPath": "humanizer.core.pt.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.ro/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-uayU7eCmf71PK0RkVXaq4whXp8sVuF31MDAN2LzXlAKlFGZxeljdBVhGnv7OrNrXoBFT5mykwW406EMWklyv5Q==",
+      "path": "humanizer.core.ro/3.0.0-beta.54",
+      "hashPath": "humanizer.core.ro.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.ru/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-WFF8+NGUsbHk6jhMgf+pYRffwDx7fVMPRzitHwqnqblkkPWLswAVFRdeOuJWd/HFzojh5Q89gfy0OSdOsawFjg==",
+      "path": "humanizer.core.ru/3.0.0-beta.54",
+      "hashPath": "humanizer.core.ru.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.sk/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9tlb7VAmKb4NYm/hxxNvW5OMKdw4iLk9nt0UwKXI9ybOExPjld92URR4nY6VqNUjLs0OQLe49Ce7Ksp9BNhqpg==",
+      "path": "humanizer.core.sk/3.0.0-beta.54",
+      "hashPath": "humanizer.core.sk.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.sl/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OJisGT06AcsNHOVMZhZb61UBRIX5n6k7Yuko5VOiyL/lMjwNlCUgiVUjrdXcQt4sIYeJK1JJ25Kx4xYI9aAv6A==",
+      "path": "humanizer.core.sl/3.0.0-beta.54",
+      "hashPath": "humanizer.core.sl.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.sr/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-f7Dv/XywdCs/oOyi0BgaMlOmr8n8kvEibtGQ6+/CSCDPAF/adpxlKrhVLNEYEdl7kXPWwq14Z61V64YsRBooVg==",
+      "path": "humanizer.core.sr/3.0.0-beta.54",
+      "hashPath": "humanizer.core.sr.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.sr-Latn/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2vpzDUR6EXB7x+nCjHbpwUdd6JY4LvZoqmUCp3EsK1J5mvvLxXuKsdsR6ezZ8+A7+KWGqld2CBX7n2o1T2dI5A==",
+      "path": "humanizer.core.sr-latn/3.0.0-beta.54",
+      "hashPath": "humanizer.core.sr-latn.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.sv/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zV+SzaTpFp+wWLLoHbPyQsams7e5wy0rZVrW/61CBLeKrG9F0k3vbE7VQIPSK6bHUznNaKCiFuJz2LzZbtlY6w==",
+      "path": "humanizer.core.sv/3.0.0-beta.54",
+      "hashPath": "humanizer.core.sv.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.th-TH/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-qcZjq15r5yvS/DxhQS3cKBhoX+MxJDU865TDvt/V+aJaTrNB6tOb/UA0EY/4a93WPubJXCzaArvc3UkuGmGMhw==",
+      "path": "humanizer.core.th-th/3.0.0-beta.54",
+      "hashPath": "humanizer.core.th-th.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.tr/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dBgZaArKX8VYVfwEQLtuWMWkUt5k+c9zej16fAc6U9surQlxHQ3EQVPoXOK4jTMpG6rhOK4zd4fSLNrCEN8k/g==",
+      "path": "humanizer.core.tr/3.0.0-beta.54",
+      "hashPath": "humanizer.core.tr.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.uk/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Q5ESweLsTVWSmLXf5iHGrBzxjI9n/qmnrtLib+i7+6TrTBKi0p7JQWM7AC00YBia8KYpqIPzrqkjCcDChK8hnA==",
+      "path": "humanizer.core.uk/3.0.0-beta.54",
+      "hashPath": "humanizer.core.uk.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.uz-Cyrl-UZ/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9QP6OE8QGwFOiF9e30sP4knMJhBEu+v5Vo+1alsYsNy/YjqaKthI1ZQRtjebG2nYDTG7MpvA3euruMqMoEUbuQ==",
+      "path": "humanizer.core.uz-cyrl-uz/3.0.0-beta.54",
+      "hashPath": "humanizer.core.uz-cyrl-uz.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.uz-Latn-UZ/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BPVstod7L5/Dte6Ayac9wkbFA5XOZdaY+cMXXc+tBHMVNBAiuPcqDtgSHVBHJxFHAJQZyzfM7CGR0EiOHcKMzw==",
+      "path": "humanizer.core.uz-latn-uz/3.0.0-beta.54",
+      "hashPath": "humanizer.core.uz-latn-uz.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.vi/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-uyNV6ycNfsiQYPOJdl9JbcVg93sgwN8R7YK29eVf8+YXGEjzqYMpBhE2/5v7EYulAgCEQv2mKnDEqFc77YpOJg==",
+      "path": "humanizer.core.vi/3.0.0-beta.54",
+      "hashPath": "humanizer.core.vi.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.zh-CN/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-MT2CujRscVTrxlPtk4bM/UMhkrGNWKFz8CoHT1nIIvDJEv+/Z4BnQEvNzpYdjRCWXYoSvr3DmJiVslJL5fJKTw==",
+      "path": "humanizer.core.zh-cn/3.0.0-beta.54",
+      "hashPath": "humanizer.core.zh-cn.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.zh-Hans/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tjAQQxo+0Ge9OOyYlGAR7mIZMT7uTi7SCf/NRisFqPV2zCAyXHm5WgyJJ25z/DsOmB93oJptN7+SVTCM4ZMAPQ==",
+      "path": "humanizer.core.zh-hans/3.0.0-beta.54",
+      "hashPath": "humanizer.core.zh-hans.3.0.0-beta.54.nupkg.sha512"
+    },
+    "Humanizer.Core.zh-Hant/3.0.0-beta.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DnaSMqZhP5z3izKhDLWfZazzdQcmyKDLOnZUj6I56DksovX2dhNpjpCoTS++8vSptJDOihpOi24sEYosPdL6Uw==",
+      "path": "humanizer.core.zh-hant/3.0.0-beta.54",
+      "hashPath": "humanizer.core.zh-hant.3.0.0-beta.54.nupkg.sha512"
+    },
+    "JetBrains.Annotations/2024.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ox5pkeLQXjvJdyAB4b2sBYAlqZGLh3PjSnP1bQNVx72ONuTJ9+34/+Rq91Fc0dG29XG9RgZur9+NcP4riihTug==",
+      "path": "jetbrains.annotations/2024.3.0",
+      "hashPath": "jetbrains.annotations.2024.3.0.nupkg.sha512"
+    },
+    "Markdig.Signed/0.40.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tuoVAXkGYdXyqIq+wkqFFn1LpJzsAuxghqi+MxDc+CrHdQWCMtCsycXMkNcsgsjJeUpFYHqcSBUUzZXEsN9ejQ==",
+      "path": "markdig.signed/0.40.0",
+      "hashPath": "markdig.signed.0.40.0.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.OpenApi/9.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JUndpjRNdG8GvzBLH/J4hen4ehWaPcshtiQ6+sUs1Bcj3a7dOsmWpDloDlpPeMOVSlhHwUJ3Xld0ClZjsFLgFQ==",
+      "path": "microsoft.aspnetcore.openapi/9.0.2",
+      "hashPath": "microsoft.aspnetcore.openapi.9.0.2.nupkg.sha512"
+    },
+    "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-UcSjPsst+DfAdJGVDsu346FX0ci0ah+lw3WRtn18NUwEqRt70HaOQ7lI72vy3+1LxtqI3T5GWwV39rQSrCzAeg==",
+      "path": "microsoft.bcl.asyncinterfaces/6.0.0",
+      "hashPath": "microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Configuration.Abstractions/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3lE/iLSutpgX1CC0NOW70FJoGARRHbyKmG7dc0klnUZ9Dd9hS6N/POPWhKhMLCEuNN5nXEY5agmlFtH562vqhQ==",
+      "path": "microsoft.extensions.configuration.abstractions/8.0.0",
+      "hashPath": "microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.DependencyInjection/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-V8S3bsm50ig6JSyrbcJJ8bW2b9QLGouz+G1miK3UTaOWmMtFwNNNzUf4AleyDWUmTrWMLNnFSLEQtxmxgNQnNQ==",
+      "path": "microsoft.extensions.dependencyinjection/8.0.0",
+      "hashPath": "microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3iE7UF7MQkCv1cxzCahz+Y/guQbTqieyxyaWKhrRO91itI9cOKO76OHeQDahqG4MmW5umr3CcCvGmK92lWNlbg==",
+      "path": "microsoft.extensions.dependencyinjection.abstractions/8.0.2",
+      "hashPath": "microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Logging/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tvRkov9tAJ3xP51LCv3FJ2zINmv1P8Hi8lhhtcKGqM+ImiTCC84uOPEI4z8Cdq2C3o9e+Aa0Gw0rmrsJD77W+w==",
+      "path": "microsoft.extensions.logging/8.0.0",
+      "hashPath": "microsoft.extensions.logging.8.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Logging.Abstractions/8.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nroMDjS7hNBPtkZqVBbSiQaQjWRDxITI8Y7XnDs97rqG3EbzVTNLZQf7bIeUJcaHOV8bca47s1Uxq94+2oGdxA==",
+      "path": "microsoft.extensions.logging.abstractions/8.0.2",
+      "hashPath": "microsoft.extensions.logging.abstractions.8.0.2.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Options/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JOVOfqpnqlVLUzINQ2fox8evY2SKLYJ3BV8QDe/Jyp21u1T7r45x/R/5QdteURMR5r01GxeJSBBUOCOyaNXA3g==",
+      "path": "microsoft.extensions.options/8.0.0",
+      "hashPath": "microsoft.extensions.options.8.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Primitives/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bXJEZrW9ny8vjMF1JV253WeLhpEVzFo1lyaZu1vQ4ZxWUlVvknZ/+ftFgVheLubb4eZPSwwxBeqS1JkCOjxd8g==",
+      "path": "microsoft.extensions.primitives/8.0.0",
+      "hashPath": "microsoft.extensions.primitives.8.0.0.nupkg.sha512"
+    },
+    "Microsoft.IdentityModel.Abstractions/8.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ewgV0sc2B3tjes8+OCRGE08Uxsey3qFfOD8vNq2gTs9k0/zPZ0MejK7Cb/eAW2c2Oz+IQHqgZkTycrAKYBD5yw==",
+      "path": "microsoft.identitymodel.abstractions/8.6.0",
+      "hashPath": "microsoft.identitymodel.abstractions.8.6.0.nupkg.sha512"
+    },
+    "Microsoft.IdentityModel.JsonWebTokens/8.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-g/CFN/OzAhJb9a94ep6/xv4b9fOUL8heFkKDwC/HNb17tUDOIPN5iVawisfZ0p1xjJlmVyYWIggnECqIfX8Rfw==",
+      "path": "microsoft.identitymodel.jsonwebtokens/8.6.0",
+      "hashPath": "microsoft.identitymodel.jsonwebtokens.8.6.0.nupkg.sha512"
+    },
+    "Microsoft.IdentityModel.Logging/8.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PqkPSoENwbGQenGQT270hZIt5p36Ta4YwDla4QId6LdqCeUDus63OChHBv+3AgujFVeBJlRrvmkN7H+Lug+u0g==",
+      "path": "microsoft.identitymodel.logging/8.6.0",
+      "hashPath": "microsoft.identitymodel.logging.8.6.0.nupkg.sha512"
+    },
+    "Microsoft.IdentityModel.Tokens/8.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ga4ASKm8EezJ+Oj4uvTNE0xjIWy27Ix5pOZz737CnLzxv7ClFnelX+YWbFuiO1Qj2zVoIpsPqKJRGHGlpFF6eQ==",
+      "path": "microsoft.identitymodel.tokens/8.6.0",
+      "hashPath": "microsoft.identitymodel.tokens.8.6.0.nupkg.sha512"
+    },
+    "Microsoft.NETCore.Platforms/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VyPlqzH2wavqquTcYpkIIAQ6WdenuKoFN0BdYBbCWsclXacSOHNQn66Gt4z5NBqEYW0FAPm5rlvki9ZiCij5xQ==",
+      "path": "microsoft.netcore.platforms/5.0.0",
+      "hashPath": "microsoft.netcore.platforms.5.0.0.nupkg.sha512"
+    },
+    "Microsoft.OpenApi/1.6.17": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Le+kehlmrlQfuDFUt1zZ2dVwrhFQtKREdKBo+rexOwaCoYP0/qpgT9tLxCsZjsgR5Itk1UKPcbgO+FyaNid/bA==",
+      "path": "microsoft.openapi/1.6.17",
+      "hashPath": "microsoft.openapi.1.6.17.nupkg.sha512"
+    },
+    "Microsoft.Win32.Registry/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dDoKi0PnDz31yAyETfRntsLArTlVAVzUzCIvvEDsDsucrl33Dl8pIJG06ePTJTI3tGpeyHS9Cq7Foc/s4EeKcg==",
+      "path": "microsoft.win32.registry/5.0.0",
+      "hashPath": "microsoft.win32.registry.5.0.0.nupkg.sha512"
+    },
+    "Nito.AsyncEx.Coordination/5.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QMyUfsaxov//0ZMbOHWr9hJaBFteZd66DV1ay4J5wRODDb8+K/uHC7+3VsOflo6SVw/29mu8OWZp8vMDSuzc0w==",
+      "path": "nito.asyncex.coordination/5.1.2",
+      "hashPath": "nito.asyncex.coordination.5.1.2.nupkg.sha512"
+    },
+    "Nito.AsyncEx.Tasks/5.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-jEkCfR2/M26OK/U4G7SEN063EU/F4LiVA06TtpZILMdX/quIHCg+wn31Zerl2LC+u1cyFancjTY3cNAr2/89PA==",
+      "path": "nito.asyncex.tasks/5.1.2",
+      "hashPath": "nito.asyncex.tasks.5.1.2.nupkg.sha512"
+    },
+    "Nito.Collections.Deque/1.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CU0/Iuv5VDynK8I8pDLwkgF0rZhbQoZahtodfL0M3x2gFkpBRApKs8RyMyNlAi1mwExE4gsmqQXk4aFVvW9a4Q==",
+      "path": "nito.collections.deque/1.1.1",
+      "hashPath": "nito.collections.deque.1.1.1.nupkg.sha512"
+    },
+    "Nito.Disposables/2.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6sZ5uynQeAE9dPWBQGKebNmxbY4xsvcc5VplB5WkYEESUS7oy4AwnFp0FhqxTSKm/PaFrFqLrYr696CYN8cugg==",
+      "path": "nito.disposables/2.2.1",
+      "hashPath": "nito.disposables.2.2.1.nupkg.sha512"
+    },
+    "NLog/5.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LwMcGSW3soF3/SL68rlJN3Eh3ktrAPycC3zZR/07OYBPraZUu0bygEC7kIN10lUQgMXT4s84Fi1chglGdGrQEg==",
+      "path": "nlog/5.4.0",
+      "hashPath": "nlog.5.4.0.nupkg.sha512"
+    },
+    "NLog.Extensions.Logging/5.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5T19INfbzRywZpyBGoQChsB/R7eHW9hR4Ml9O22NRjJpfltGIJ+rsoCcjwr2/V/E6i3/eXLTQwRAeDMICjWpTA==",
+      "path": "nlog.extensions.logging/5.4.0",
+      "hashPath": "nlog.extensions.logging.5.4.0.nupkg.sha512"
+    },
+    "NLog.Web.AspNetCore/5.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Le6rbipSqeGVygbLGgRwZNMsbjJ+YnoAMJdZVhgjQimXwmYbDNkSswK6Mb32bKoC5aIg5mhw+hpAmgWdegs4Eg==",
+      "path": "nlog.web.aspnetcore/5.4.0",
+      "hashPath": "nlog.web.aspnetcore.5.4.0.nupkg.sha512"
+    },
+    "protobuf-net/3.2.46": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kNr1fnLWTVNvK93SC1CFrV3TyNDrtrqtoAv7+V4WX3c/tckzmIISW0Hl5TV5GgIYL5rrFeUEYWNHQZDCHpSMzQ==",
+      "path": "protobuf-net/3.2.46",
+      "hashPath": "protobuf-net.3.2.46.nupkg.sha512"
+    },
+    "protobuf-net.Core/3.2.46": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kRPJ71Bpj0nK2iRSnH6XTPCA0+Nal5xoVBKwFqgd5n/yVA7Iie/3KwvcmC+aFjTymh+Kibn4q4fnceIOJrKRlA==",
+      "path": "protobuf-net.core/3.2.46",
+      "hashPath": "protobuf-net.core.3.2.46.nupkg.sha512"
+    },
+    "SteamKit2/3.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JtDarUhYkPWdSOXIUhJNgEOTuK868wdvUJerhKd9opRa2V07/7AFGmpPGX6AXgapuxbdvJfnLg52QGN0pTwq3Q==",
+      "path": "steamkit2/3.0.2",
+      "hashPath": "steamkit2.3.0.2.nupkg.sha512"
+    },
+    "Swashbuckle.AspNetCore.SwaggerUI/7.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hgrXeKzyp5OGN8qVvL7A+vhmU7mDJTfGpiMBRL66IcfLOyna8UTLtn3cC3CghamXpRDufcc9ciklTszUGEQK0w==",
+      "path": "swashbuckle.aspnetcore.swaggerui/7.2.0",
+      "hashPath": "swashbuckle.aspnetcore.swaggerui.7.2.0.nupkg.sha512"
+    },
+    "System.Collections.Immutable/7.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dQPcs0U1IKnBdRDBkrCTi1FoajSTBzLcVTpjO4MBCMC7f4pDOIPzgBoX8JjG7X6uZRJ8EBxsi8+DR1JuwjnzOQ==",
+      "path": "system.collections.immutable/7.0.0",
+      "hashPath": "system.collections.immutable.7.0.0.nupkg.sha512"
+    },
+    "System.Composition/9.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4xBv1vlceeYDtAoeC6xo74HTY8vV6TbAWxkHjo5y/4wq13ex4nTgRHjHobR6p2MF65Ev1BtOH5xQLEnCHhtBsA==",
+      "path": "system.composition/9.0.2",
+      "hashPath": "system.composition.9.0.2.nupkg.sha512"
+    },
+    "System.Composition.AttributedModel/9.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XgQstWRsZFpOR19Bkfrnj2uad+WNDMqoLCAHuhxoiuSMNYhI1aYKcTHNFEpJvk87Yi8pKPEjRorb/TrkAM2iCw==",
+      "path": "system.composition.attributedmodel/9.0.2",
+      "hashPath": "system.composition.attributedmodel.9.0.2.nupkg.sha512"
+    },
+    "System.Composition.Convention/9.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KDWItip6Kkc4S74skkZb8eus21iXuwfV7HdoAf396uIxlofmKpQstWqVgS0DcWQes4SfY8rGcy3spZGg9iAriw==",
+      "path": "system.composition.convention/9.0.2",
+      "hashPath": "system.composition.convention.9.0.2.nupkg.sha512"
+    },
+    "System.Composition.Hosting/9.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-A97et4A4gLgwvjeYcQQ7lUOigiaBb6BvZ8qV5xxSzQyuCMm8VBBzpcVA0c9/F1pNVuaIt+2kdCOSp+XqpeErjQ==",
+      "path": "system.composition.hosting/9.0.2",
+      "hashPath": "system.composition.hosting.9.0.2.nupkg.sha512"
+    },
+    "System.Composition.Runtime/9.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-W+M/KX93FwJ3JMB8bP3bBK+9p/zOrocowg9dd2H1i0dcHlQk4agXk2o4qYJHQDYyUpUrf3BsMiFRKvPMZHZasA==",
+      "path": "system.composition.runtime/9.0.2",
+      "hashPath": "system.composition.runtime.9.0.2.nupkg.sha512"
+    },
+    "System.Composition.TypedParts/9.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-YUH7bPkodtbSkCS1jSVBdInILKNO3kHB4nzYknAelRqPbzoWEBnrQHwp3OHOMJx46cgQIO5t9KYxLuYVopmt1Q==",
+      "path": "system.composition.typedparts/9.0.2",
+      "hashPath": "system.composition.typedparts.9.0.2.nupkg.sha512"
+    },
+    "System.IO.Hashing/9.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-jY+E/PElNWQiazN0YHqZGvcSedcZ4Wt0Os1nnJ2SzR3gWZlhNRDkSXOhuHJcLuImD8SrJQQ8TfU0W4mVcit2hg==",
+      "path": "system.io.hashing/9.0.1",
+      "hashPath": "system.io.hashing.9.0.1.nupkg.sha512"
+    },
+    "System.Linq.Async/6.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0YhHcaroWpQ9UCot3Pizah7ryAzQhNvobLMSxeDIGmnXfkQn8u5owvpOH0K6EVB+z9L7u6Cc4W17Br/+jyttEQ==",
+      "path": "system.linq.async/6.0.1",
+      "hashPath": "system.linq.async.6.0.1.nupkg.sha512"
+    },
+    "System.Memory/4.5.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XIWiDvKPXaTveaB7HVganDlOCRoj03l+jrwNvcge/t8vhGYKvqV+dMv6G4SAX2NoNmN0wZfVPTAlFwZcZvVOUw==",
+      "path": "system.memory/4.5.5",
+      "hashPath": "system.memory.4.5.5.nupkg.sha512"
+    },
+    "System.Security.AccessControl/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dagJ1mHZO3Ani8GH0PHpPEe/oYO+rVdbQjvjJkBRNQkX4t0r1iaeGn8+/ybkSLEan3/slM0t59SVdHzuHf2jmw==",
+      "path": "system.security.accesscontrol/5.0.0",
+      "hashPath": "system.security.accesscontrol.5.0.0.nupkg.sha512"
+    },
+    "System.Security.Cryptography.ProtectedData/9.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+z9JWtU9di45tW/w6zpuJms4SnAAqKY2Usmmxs7MpOhxWoIeR2pKl1vEkaFbEx52ZfrMFcZXsFe+8WERMozzGg==",
+      "path": "system.security.cryptography.protecteddata/9.0.2",
+      "hashPath": "system.security.cryptography.protecteddata.9.0.2.nupkg.sha512"
+    },
+    "System.Security.Principal.Windows/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-t0MGLukB5WAVU9bO3MGzvlGnyJPgUlcwerXn1kzBRjwLKixT96XV0Uza41W49gVd8zEMFu9vQEFlv0IOrytICA==",
+      "path": "system.security.principal.windows/5.0.0",
+      "hashPath": "system.security.principal.windows.5.0.0.nupkg.sha512"
+    },
+    "System.ValueTuple/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-okurQJO6NRE/apDIP23ajJ0hpiNmJ+f0BwOlB/cSqTLQlw5upkf+5+96+iG2Jw40G1fCVCyPz/FhIABUjMR+RQ==",
+      "path": "system.valuetuple/4.5.0",
+      "hashPath": "system.valuetuple.4.5.0.nupkg.sha512"
+    }
+  }
+}
