@@ -49,7 +49,7 @@ jobs:
       - name: Run cmmain.py
         id: run_script
         env:
-          TOKEN_MAIN: ${{ secrets.TOKEN_MAIN }}
+          TOKEN_SUB: ${{ secrets.TOKEN_MAIN }}
           LOG_WEBHOOK: ${{ secrets.LOG_WEBHOOK }}
           DELAY_MESSAGE_MS: ${{ vars.DELAY_MESSAGE_MS || '1500' }}
           DELAY_TOKEN_MS: ${{ vars.DELAY_TOKEN_MS || '3000' }}
