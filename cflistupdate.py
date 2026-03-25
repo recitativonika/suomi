@@ -22,14 +22,15 @@ for source in sources:
     print(f"Fetching from {source}...")
     try:
         resp = requests.get(source)
-        for line in resp.text.splitlines():
-            line = line.split(chr(35))[0].strip()
-            if line.startswith("0.0.0.0"):
-                parts = line.split()
-                if len(parts) >= 2:
-                    domain = parts[1]
-                    if domain not in ["0.0.0.0", "localhost"]:
-                        domains.add(domain)
+        if resp.status_code == 200:
+            for line in resp.text.splitlines():
+                line = line.split(chr(35))[0].strip()
+                if line.startswith("0.0.0.0"):
+                    parts = line.split()
+                    if len(parts) >= 2:
+                        domain = parts[1]
+                        if domain not in ["0.0.0.0", "localhost"]:
+                            domains.add(domain)
     except Exception as e:
         print(f"Error fetching {source}: {e}")
 
@@ -45,11 +46,19 @@ print(f"Divided into {len(chunks)} chunks.")
 
 print("Checking existing lists on Cloudflare...")
 resp = requests.get(url, headers=headers)
-existing_lists = resp.json().get("result", []) if resp.status_code == 200 else []
+
+if resp.status_code != 200:
+    print(f"Critical Error: Authentication failed with status {resp.status_code}")
+    print(f"Response: {resp.text}")
+    exit(1)
+
+existing_lists = resp.json().get("result")
+if existing_lists is None:
+    existing_lists = []
 
 prefix = "Auto-Adblock-Part-"
 for lst in existing_lists:
-    if lst["name"].startswith(prefix):
+    if lst.get("name") and lst["name"].startswith(prefix):
         print(f"Deleting old list: {lst['name']}")
         requests.delete(f"{url}/{lst['id']}", headers=headers)
 
