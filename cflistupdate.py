@@ -3,7 +3,7 @@ import json
 import requests
 
 account_id = os.environ.get("CF_ACCOUNT_ID")
-api_token = os.environ.get("TOKEN_MAIN")
+api_token = os.environ.get("CF_TOKEN_MAIN")
 
 url = f"https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/lists"
 headers = {
