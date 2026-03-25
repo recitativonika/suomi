@@ -25,4 +25,4 @@ jobs:
       env:
         CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
         TOKEN_MAIN: ${{ secrets.TOKEN_MAIN }}
-      run: python cflistupdate.py
+      run: python cmmain.py
