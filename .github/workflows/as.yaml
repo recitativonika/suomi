@@ -1,52 +1,45 @@
 name: AFARM
+
 on:
   schedule:
     - cron: '0 1,12 * * *'
   workflow_dispatch:
+
 jobs:
   afarm:
     runs-on: ubuntu-latest
     timeout-minutes: 360
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Restore encrypted ASF state
-        id: cache-restore
+      - id: cache-restore
         uses: actions/cache/restore@v4
         with:
           path: config
-          key: asf-encrypted-v4-${{ github.ref }}
-          restore-keys: asf-encrypted-v4-
+          key: asf-state-${{ github.run_id }}
+          restore-keys: |
+            asf-state-
 
-      - name: Ensure config and plugins directories exist
-        run: |
-          mkdir -p config plugins
+      - run: mkdir -p config plugins
 
-      - name: Install gpg and jq
-        run: sudo apt-get update && sudo apt-get install -y gnupg jq
+      - run: sudo apt-get update && sudo apt-get install -y gnupg jq
 
-      - name: Decrypt config files (if any)
-        env:
+      - env:
           PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
         run: |
           cd config
           shopt -s nullglob
           for file in *.gpg; do
             output="${file%.gpg}"
-            echo "Decrypting $file → $output"
-            gpg --batch --yes --passphrase "$PASSPHRASE" --decrypt --output "$output" "$file" || echo "Decrypt failed for $file"
+            gpg --batch --yes --passphrase "$PASSPHRASE" --decrypt --output "$output" "$file" || true
           done
 
-      - name: Run AFARM and Send Live Logs to Discord
-        id: run_asf
-        env:
+      - env:
           WEBHOOK_URL: ${{ secrets.ASF_WEBHOOK_DISCORD }}
         run: |
           touch asf_log.txt
-
           START_TIME=$(TZ='Asia/Jakarta' date +'(%d/%m/%Y) %I:%M %p GMT+7')
-          jq -n --arg content "**Webhook AFARM started** $START_TIME" '{content: $content}' > start_payload.json
+          jq -n --arg content "🚀 **AFARM Started** at $START_TIME" '{content: $content}' > start_payload.json
           curl -s -H "Content-Type: application/json" -X POST -d @start_payload.json "$WEBHOOK_URL" > /dev/null || true
           rm -f start_payload.json
 
@@ -54,27 +47,24 @@ jobs:
             last_line=0
             while true; do
               sleep 60
-              current_line=$(wc -l < asf_log.txt)
-              
-              if [ "$current_line" -gt "$last_line" ]; then
-                tail -n +$((last_line + 1)) asf_log.txt > temp_chunk.txt
-                last_line=$current_line
-                
-                split -C 1800 temp_chunk.txt log_part_
-                
-                for part in log_part_*; do
-                  if [ -s "$part" ]; then
-                    jq -Rs --arg prefix "**Live AFARM Log** (Run: ${{ github.run_id }})" \
-                      '{content: ($prefix + "\n```text\n" + . + "\n```")}' "$part" > payload.json
-                    
-                    curl -s -H "Content-Type: application/json" -X POST -d @payload.json "$WEBHOOK_URL" > /dev/null || true
-                    sleep 2
-                  fi
-                done
-                rm -f log_part_* temp_chunk.txt payload.json
+              if [ -f asf_log.txt ]; then
+                current_line=$(wc -l < asf_log.txt)
+                if [ "$current_line" -gt "$last_line" ]; then
+                  tail -n +$((last_line + 1)) asf_log.txt > temp_chunk.txt
+                  last_line=$current_line
+                  split -C 1800 temp_chunk.txt log_part_ 2>/dev/null || true
+                  for part in log_part_*; do
+                    if [ -s "$part" ]; then
+                      jq -Rs --arg prefix "📋 **Live Log**" '{content: ($prefix + "\n```text\n" + . + "\n```")}' "$part" > payload.json
+                      curl -s -H "Content-Type: application/json" -X POST -d @payload.json "$WEBHOOK_URL" > /dev/null || true
+                      sleep 2
+                    fi
+                  done
+                  rm -f log_part_* temp_chunk.txt payload.json
+                fi
               fi
             done
-          ) & 
+          ) &
           LOGGER_PID=$!
 
           timeout --preserve-status --signal=SIGTERM 21600s \
@@ -82,28 +72,29 @@ jobs:
               -v ${{ github.workspace }}/config:/app/config \
               -v ${{ github.workspace }}/plugins:/app/plugins \
               justarchi/archisteamfarm:latest \
-              --no-ui --headless --no-restart 2>&1 | grep --line-buffered -vE "═|█|╔|╚|║|====|Pulling from|Pulling fs layer|Waiting|Verifying Checksum|Download complete|Pull complete|Digest:|Status: Downloaded" | grep --line-buffered -v "|ASFEnhance|插件作者|爱发电|未加载外部模块|" > asf_log.txt || true
+              --no-ui --headless --no-restart 2>&1 | \
+              grep --line-buffered -vE "═|█|╔|╚|║|====|Pulling from|Pulling fs layer|Waiting|Verifying Checksum|Download complete|Pull complete|Digest:|Status: Downloaded" | \
+              grep --line-buffered -v "|ASFEnhance|插件作者|爱发电|未加载外部模块|" > asf_log.txt || true
 
           kill $LOGGER_PID || true
+          jq -n --arg content "✅ **AFARM Finished**" '{content: $content}' > end_payload.json
+          curl -s -H "Content-Type: application/json" -X POST -d @end_payload.json "$WEBHOOK_URL" > /dev/null || true
 
-      - name: Re-encrypt config files (only if files exist)
-        if: always()
+      - if: always()
         env:
           PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
         run: |
           cd config
           shopt -s nullglob
-          for file in *.json *.db; do
+          for file in *.json *.db *.bin; do
             if [ -f "$file" ]; then
-              echo "Encrypting $file → ${file}.gpg"
-              gpg --batch --yes --symmetric --cipher-algo AES256 \
-                --passphrase "$PASSPHRASE" --output "${file}.gpg" "$file" || echo "Encrypt failed for $file"
+              gpg --batch --yes --symmetric --cipher-algo AES256 --passphrase "$PASSPHRASE" --output "${file}.gpg" "$file" || true
+              rm -f "$file"
             fi
           done
 
-      - name: Save encrypted ASF state
-        uses: actions/cache/save@v4
+      - uses: actions/cache/save@v4
         if: always()
         with:
           path: config
-          key: asf-encrypted-v4-${{ github.ref }}
+          key: asf-state-${{ github.run_id }}
