@@ -359,7 +359,7 @@ if {[info exists env(LOG_FILE)] && $env(LOG_FILE) ne ""} {
 } else {
     log_user 1
 }
-spawn nexus-network start --node-id $env(NODE_ID) --headless --max-difficulty small_medium --max-threads 4
+spawn nexus-network start --node-id $env(NODE_ID) --headless --max-difficulty small_medium --max-threads 2
 expect {
     -re {Success \[.*\] Step 4 of 4: Proof submitted.*} {
         puts "SUCCESS_DETECTED:0"
