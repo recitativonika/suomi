@@ -113,11 +113,12 @@ send_node_success() {
     local node_id="$1"
     local points="$2"
     local line_number="$3"
+    local current_success="$4"
     local version_suffix=""
     if [ -n "$NEXUS_VERSION_STR" ]; then
         version_suffix=" ${NEXUS_VERSION_STR}"
     fi
-    local content="✅ SUCCESS - Node ${node_id} submitted successfully! User: ${USERNAME}@${HOSTNAME}${version_suffix} (Group ${GROUP_NUMBER})"
+    local content="✅ SUCCESS ${current_success} - Node ${node_id} submitted successfully! User: ${USERNAME}@${HOSTNAME}${version_suffix} (Group ${GROUP_NUMBER})"
     send_discord_message "$content"
 }
 
@@ -133,8 +134,14 @@ send_group_startup() {
     [ "$SEND_DISCORD" = "0" ] && return 0
     local content
     local mode_str="$MODE"
-    content=$(printf "🚀 Runner Started (Mode: %s)\nℹ️ User: %s@%s\nℹ️ Group %s (%s nodes) First: %s Last: %s" \
-        "$mode_str" "$USERNAME" "$HOSTNAME" "$GROUP_NUMBER" "${#NODES[@]}" "${NODES[0]}" "${NODES[-1]}")
+    local nodes_info
+    if [ ${#NODES[@]} -eq 1 ]; then
+        nodes_info="${NODES[0]}"
+    else
+        nodes_info="First: ${NODES[0]} Last: ${NODES[-1]}"
+    fi
+    content=$(printf "🚀 Runner Started (Mode: %s)\nℹ️ User: %s@%s\nℹ️ Group %s (%s nodes): %s" \
+        "$mode_str" "$USERNAME" "$HOSTNAME" "$GROUP_NUMBER" "${#NODES[@]}" "$nodes_info")
     send_discord_message "$content"
     send_discord_message_alt "$content"
 }
@@ -203,6 +210,22 @@ shutdown() {
     exit 0
 }
 
+get_progress_bar() {
+    local pct=$1
+    local max_blocks=10
+    local filled=$(( (pct + 5) / 10 ))
+    [ "$filled" -gt "$max_blocks" ] && filled=$max_blocks
+    local bar=""
+    for ((i=0; i<max_blocks; i++)); do
+        if [ "$i" -lt "$filled" ]; then
+            bar="${bar}█"
+        else
+            bar="${bar}░"
+        fi
+    done
+    echo "$bar"
+}
+
 start_system_info_reporter() {
     [ "$SEND_DISCORD" = "0" ] && return 0
     (
@@ -213,9 +236,14 @@ start_system_info_reporter() {
             total_mb=$(awk '/MemTotal:/ {printf "%d", $2/1024 }' /proc/meminfo 2>/dev/null || echo 1024)
             used_mb=$(awk '/MemTotal:/ {t=$2} /MemAvailable:/ {a=$2} END {printf "%d", (t-a)/1024 }' /proc/meminfo 2>/dev/null || echo 512)
             cpu_pct=$(awk '{u=$2+$4; t=$2+$4+$5} END {if (NR==1) {print 0} else {printf "%d", (u*100)/t}}' <(grep 'cpu ' /proc/stat) <(sleep 1; grep 'cpu ' /proc/stat) 2>/dev/null || echo 0)
+            
+            local ram_pct=$(( used_mb * 100 / total_mb ))
+            local cpu_bar=$(get_progress_bar "$cpu_pct")
+            local ram_bar=$(get_progress_bar "$ram_pct")
+            
             local content
-            content=$(printf "🖥️ System info: %s (Group %s)\n🔄 CPU: %s cores %s threads, RAM: %sMB\n🔄 Usage: CPU %s%%, RAM %sMB" \
-                "$USERNAME" "$GROUP_NUMBER" "$cores" "$threads" "$total_mb" "$cpu_pct" "$used_mb")
+            content=$(printf "🖥️ System info: %s (Group %s)\n🖥️ CPU: %s cores %s threads, RAM: %sMB\n⚠️ Usage:\n🔄 %s CPU %s%%\n🔄 %s RAM %sMB" \
+                "$USERNAME" "$GROUP_NUMBER" "$cores" "$threads" "$total_mb" "$cpu_bar" "$cpu_pct" "$ram_bar" "$used_mb")
             send_discord_message_system "$content"
             sleep 600
         done
@@ -331,7 +359,7 @@ if {[info exists env(LOG_FILE)] && $env(LOG_FILE) ne ""} {
 } else {
     log_user 1
 }
-spawn nexus-network start --node-id $env(NODE_ID) --headless --max-difficulty small_medium --max-threads 2
+spawn nexus-network start --node-id $env(NODE_ID) --headless --max-difficulty small_medium --max-threads 4
 expect {
     -re {Success \[.*\] Step 4 of 4: Proof submitted.*} {
         puts "SUCCESS_DETECTED:0"
@@ -365,7 +393,7 @@ EOF
                     SUCCESS_DETECTED:*)
                         points="${line#SUCCESS_DETECTED:}"
                         successes=$((successes + 1))
-                        send_node_success "$node" "$points" "$line_number"
+                        send_node_success "$node" "$points" "$line_number" "$successes"
                         echo "[${line_number}] Node ${node} errors: ${errors}, successes: ${successes}"
                         ;;
                     ERROR_DETECTED:*)
