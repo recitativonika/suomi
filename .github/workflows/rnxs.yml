@@ -1,20 +1,20 @@
-name: rnxs-parallel-10pergroup
+name: rnxs-single-node
 
 on:
   schedule:
-    - cron: '0 1 * * *'
+    - cron: '0 12 * * *'
   workflow_dispatch:
 
 jobs:
   run-rnxs-group:
     runs-on: ubuntu-latest
-    timeout-minutes: 125
+    timeout-minutes: 360
 
     strategy:
       fail-fast: false
-      max-parallel: 15
+      max-parallel: 1
       matrix:
-        group: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]
+        group: [1]
 
     steps:
       - name: Checkout repository
@@ -23,24 +23,15 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -q >/dev/null 2>&1
-          sudo apt-get install -y -q gnupg expect curl jq wget >/dev/null 2>&1
+          sudo apt-get install -y -q expect curl jq wget >/dev/null 2>&1
 
-      - name: Decrypt rnxs.sh
-        env:
-          SCRIPT_PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
+      - name: Prepare Script
         run: |
-          if [ -f "rnxs.sh.gpg" ]; then
-            echo "$SCRIPT_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 --decrypt rnxs.sh.gpg > rnxs.sh 2>/dev/null
-            chmod +x rnxs.sh
-          elif [ -f "rnxs.sh" ]; then
-            chmod +x rnxs.sh
-          else
-            exit 1
-          fi
+          chmod +x rnxs.sh
 
       - name: Prepare chunk
         run: |
-          CHUNK_SIZE=10
+          CHUNK_SIZE=1
           START=$(( (${{ matrix.group }} - 1) * CHUNK_SIZE + 1 ))
           END=$(( ${{ matrix.group }} * CHUNK_SIZE ))
           awk "NR>=$START && NR<=$END" nid.txt > group_nid_${{ matrix.group }}.txt 2>/dev/null || true
@@ -52,27 +43,23 @@ jobs:
           WEBHOOK_3: ${{ secrets.WEBHOOK_3 }}
           REFRESH_SUCCESS_TARGET: 2
           REFRESH_ACCUMULATE: 1
-          CONCURRENCY: 10
+          CONCURRENCY: 1
           LOOP_MODE: "once"
           LOG_MODE: "logfull"
           SEND_DISCORD: 1
           MODE: "live"
           NID: group_nid_${{ matrix.group }}.txt
         run: |
-          [ -s "group_nid_${{ matrix.group }}.txt" ] && ./rnxs.sh ${{ matrix.group }} >/dev/null 2>&1 || true
+          [ -s "group_nid_${{ matrix.group }}.txt" ] && ./rnxs.sh ${{ matrix.group }} || true
 
-      - name: Batch notification
+      - name: Single notification
         if: always()
         env:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_1 }}
-          GROUP: ${{ matrix.group }}
         run: |
-          BATCH=$(( (GROUP - 1) / 15 + 1 ))
-          if [ $((GROUP % 15)) -eq 0 ] || [ "$GROUP" -eq 40 ]; then
-            curl -s -H "Content-Type: application/json" \
-              -d '{"content":"."}' \
-              "$WEBHOOK_URL" >/dev/null 2>&1 || true
-          fi
+          curl -s -H "Content-Type: application/json" \
+            -d '{"content":"✅ Workflow 1 VM 1 Node success"}' \
+            "$WEBHOOK_URL" >/dev/null 2>&1 || true
 
       - name: Cleanup
         if: always()
