@@ -1,4 +1,4 @@
-name: rnxs-single-node
+name: rnxs-auto-parallel-nodes
 
 on:
   schedule:
@@ -6,15 +6,35 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-rnxs-group:
+  setup-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.generate.outputs.matrix }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Generate Matrix
+        id: generate
+        run: |
+          # Menghitung jumlah node valid (mengabaikan komentar '#' dan baris kosong)
+          NODE_COUNT=$(grep -v '^#' nid.txt | grep -v '^$' | wc -l)
+          echo "Ditemukan $NODE_COUNT node valid."
+          
+          # Membuat array JSON [1, 2, 3, ..., N] untuk matrix
+          JSON_ARRAY=$(seq 1 $NODE_COUNT | jq -R . | jq -s -c .)
+          echo "matrix=$JSON_ARRAY" >> $GITHUB_OUTPUT
+
+  run-rnxs-node:
+    needs: setup-matrix
     runs-on: ubuntu-latest
     timeout-minutes: 360
 
     strategy:
       fail-fast: false
-      max-parallel: 1
+      max-parallel: 20
       matrix:
-        group: [1]
+        node_index: ${{ fromJson(needs.setup-matrix.outputs.matrix) }}
 
     steps:
       - name: Checkout repository
@@ -29,12 +49,11 @@ jobs:
         run: |
           chmod +x rnxs.sh
 
-      - name: Prepare chunk
+      - name: Prepare single node
         run: |
-          CHUNK_SIZE=1
-          START=$(( (${{ matrix.group }} - 1) * CHUNK_SIZE + 1 ))
-          END=$(( ${{ matrix.group }} * CHUNK_SIZE ))
-          awk "NR>=$START && NR<=$END" nid.txt > group_nid_${{ matrix.group }}.txt 2>/dev/null || true
+          grep -v '^#' nid.txt | grep -v '^$' | sed -n "${{ matrix.node_index }}p" > my_node_${{ matrix.node_index }}.txt
+          echo "Target Node untuk VM ini:"
+          cat my_node_${{ matrix.node_index }}.txt
 
       - name: Run script
         env:
@@ -48,23 +67,14 @@ jobs:
           LOG_MODE: "logfull"
           SEND_DISCORD: 1
           MODE: "refresh"
-          NID: group_nid_${{ matrix.group }}.txt
+          NID: my_node_${{ matrix.node_index }}.txt
         run: |
-          [ -s "group_nid_${{ matrix.group }}.txt" ] && ./rnxs.sh ${{ matrix.group }} || true
-
-      - name: Single notification
-        if: always()
-        env:
-          WEBHOOK_URL: ${{ secrets.WEBHOOK_1 }}
-        run: |
-          curl -s -H "Content-Type: application/json" \
-            -d '{"content":"✅ Workflow 1 VM 1 Node success"}' \
-            "$WEBHOOK_URL" >/dev/null 2>&1 || true
+          [ -s "my_node_${{ matrix.node_index }}.txt" ] && ./rnxs.sh ${{ matrix.node_index }} || true
 
       - name: Cleanup
         if: always()
         run: |
-          rm -f group_nid_*.txt
+          rm -f my_node_*.txt
           rm -f /tmp/nexus_* /tmp/*.log
           rm -f rnxs.sh
           rm -rf /home/runner/.nexus/bin/nexus-network
