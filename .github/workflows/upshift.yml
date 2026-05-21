@@ -1,0 +1,52 @@
+name: Upshift
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-upshift-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+
+    - name: Decrypt Files
+      env:
+        SCRIPT_PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
+      run: |
+        gpg --quiet --batch --yes --decrypt --passphrase="$SCRIPT_PASSPHRASE" --output upshift.py upshift.py.gpg
+        gpg --quiet --batch --yes --decrypt --passphrase="$SCRIPT_PASSPHRASE" --output upshift.txt upshift.txt.gpg
+
+    - name: Run & Capture Log
+      run: |
+        python upshift.py > bot_output.txt 2>&1
+
+    - name: Send Log to Webhook
+      env:
+        WEBHOOK_UPSHIFT: ${{ secrets.WEBHOOK_UPSHIFT }}
+      run: |
+        curl -H "Content-Type: multipart/form-data" \
+             -F 'payload_json={"content": ":rocket: **Upshift Run Completed!**\nAuto-run script has finished."}' \
+             -F "file=@bot_output.txt" \
+             $WEBHOOK_UPSHIFT
+
+    - name: Cleanup Secrets and Logs
+      if: always()
+      run: |
+        rm -f upshift.py
+        rm -f upshift.txt
+        rm -f bot_output.txt
+        echo "Cleanup completed successfully."
