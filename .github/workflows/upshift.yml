@@ -30,23 +30,15 @@ jobs:
         gpg --quiet --batch --yes --decrypt --passphrase="$SCRIPT_PASSPHRASE" --output upshift.py upshift.py.gpg
         gpg --quiet --batch --yes --decrypt --passphrase="$SCRIPT_PASSPHRASE" --output upshift.txt upshift.txt.gpg
 
-    - name: Run & Capture Log
-      run: |
-        python upshift.py > bot_output.txt 2>&1
-
-    - name: Send Log to Webhook
+    - name: Run Script
       env:
         WEBHOOK_UPSHIFT: ${{ secrets.WEBHOOK_UPSHIFT }}
       run: |
-        curl -H "Content-Type: multipart/form-data" \
-             -F 'payload_json={"content": ":rocket: **Upshift Run Completed!**\nAuto-run script has finished."}' \
-             -F "file=@bot_output.txt" \
-             $WEBHOOK_UPSHIFT
+        python upshift.py > /dev/null 2>&1
 
     - name: Cleanup Secrets and Logs
       if: always()
       run: |
         rm -f upshift.py
         rm -f upshift.txt
-        rm -f bot_output.txt
         echo "Cleanup completed successfully."
