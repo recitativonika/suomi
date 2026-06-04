@@ -2,7 +2,7 @@ name: AFARM
 
 on:
   schedule:
-    - cron: '0 1,12 * * *'
+    - cron: '0 12 * * *'
   workflow_dispatch:
 
 jobs:
@@ -12,6 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check Repository File Update
+        run: |
+          mkdir -p config
+          if [ -f "config/as.zip.gpg" ]; then
+            git hash-object config/as.zip.gpg > /tmp/current_repo_hash.txt
+            cp config/as.zip.gpg /tmp/repo_as.zip.gpg
+          fi
+
       - id: cache-restore
         uses: actions/cache/restore@v4
         with:
@@ -20,19 +28,39 @@ jobs:
           restore-keys: |
             asf-state-
 
+      - name: Smart Cache Override
+        run: |
+          if [ -f "/tmp/current_repo_hash.txt" ]; then
+            REPO_HASH=$(cat /tmp/current_repo_hash.txt)
+            CACHED_HASH=""
+            if [ -f "config/repo_hash.txt" ]; then
+              CACHED_HASH=$(cat config/repo_hash.txt)
+            fi
+            
+            if [ "$REPO_HASH" != "$CACHED_HASH" ]; then
+              echo "🚀 NEW as.zip.gpg detected in repository! Ignoring old cache."
+              rm -rf config/*
+              cp /tmp/repo_as.zip.gpg config/as.zip.gpg
+            else
+              echo "♻️ No update from repository. Resuming progress from cache."
+            fi
+          fi
+
       - run: mkdir -p config plugins
 
-      - run: sudo apt-get update && sudo apt-get install -y gnupg jq
+      - run: sudo apt-get update && sudo apt-get install -y gnupg jq zip unzip
 
       - env:
           PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
         run: |
           cd config
-          shopt -s nullglob
-          for file in *.gpg; do
-            output="${file%.gpg}"
-            gpg --batch --yes --passphrase "$PASSPHRASE" --decrypt --output "$output" "$file" || true
-          done
+          if [ -f "as.zip.gpg" ]; then
+            gpg --batch --yes --passphrase "$PASSPHRASE" --decrypt --output as.zip as.zip.gpg || true
+            if [ -f "as.zip" ]; then
+              unzip -o as.zip || true
+              rm as.zip
+            fi
+          fi
 
       - env:
           WEBHOOK_URL: ${{ secrets.ASF_WEBHOOK_DISCORD }}
@@ -85,13 +113,21 @@ jobs:
           PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
         run: |
           cd config
-          shopt -s nullglob
-          for file in *.json *.db *.bin; do
-            if [ -f "$file" ]; then
-              gpg --batch --yes --symmetric --cipher-algo AES256 --passphrase "$PASSPHRASE" --output "${file}.gpg" "$file" || true
-              rm -f "$file"
+          shopt -s extglob nullglob
+          files=(!(as.zip.gpg|repo_hash.txt))
+          
+          if [ ${#files[@]} -gt 0 ]; then
+            zip -r as.zip "${files[@]}"
+            if [ -f "as.zip" ]; then
+              gpg --batch --yes --symmetric --cipher-algo AES256 --passphrase "$PASSPHRASE" --output as.zip.gpg as.zip || true
+              rm as.zip
             fi
-          done
+            rm -rf "${files[@]}"
+          fi
+          
+          if [ -f "/tmp/current_repo_hash.txt" ]; then
+            cp /tmp/current_repo_hash.txt repo_hash.txt
+          fi
 
       - uses: actions/cache/save@v4
         if: always()
