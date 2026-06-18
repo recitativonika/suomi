@@ -2,7 +2,7 @@ name: AFARM
 
 on:
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 jobs:
@@ -95,7 +95,7 @@ jobs:
           ) &
           LOGGER_PID=$!
 
-          timeout --preserve-status --signal=SIGTERM 21600s \
+          timeout --preserve-status --signal=SIGTERM 18000s \
             docker run --rm \
               -v ${{ github.workspace }}/config:/app/config \
               -v ${{ github.workspace }}/plugins:/app/plugins \
@@ -105,7 +105,7 @@ jobs:
               grep --line-buffered -v "|ASFEnhance|插件作者|爱发电|未加载外部模块|" > asf_log.txt || true
 
           kill $LOGGER_PID || true
-          jq -n --arg content "✅ **AFARM Finished**" '{content: $content}' > end_payload.json
+          jq -n --arg content "✅ **AFARM Finished for this session.**" '{content: $content}' > end_payload.json
           curl -s -H "Content-Type: application/json" -X POST -d @end_payload.json "$WEBHOOK_URL" > /dev/null || true
 
       - if: always()
