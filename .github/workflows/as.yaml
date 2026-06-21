@@ -8,7 +8,7 @@ on:
 jobs:
   afarm:
     runs-on: ubuntu-latest
-    timeout-minutes: 360
+    timeout-minutes: 300
     steps:
       - uses: actions/checkout@v4
 
@@ -95,7 +95,7 @@ jobs:
           ) &
           LOGGER_PID=$!
 
-          timeout --preserve-status --signal=SIGTERM 18000s \
+          timeout --preserve-status --signal=SIGTERM 17700s \
             docker run --rm \
               -v ${{ github.workspace }}/config:/app/config \
               -v ${{ github.workspace }}/plugins:/app/plugins \
