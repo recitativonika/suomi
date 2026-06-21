@@ -112,6 +112,8 @@ jobs:
         env:
           PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
         run: |
+          sudo chown -R $USER:$USER config
+          
           cd config
           shopt -s extglob nullglob
           files=(!(as.zip.gpg|repo_hash.txt))
