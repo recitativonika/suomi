@@ -112,7 +112,8 @@ jobs:
         env:
           PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
         run: |
-          sudo chown -R $USER:$USER config
+          sudo chown -R $(whoami):$(whoami) config
+          sudo chmod -R 777 config
           
           cd config
           shopt -s extglob nullglob
