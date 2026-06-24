@@ -33,7 +33,7 @@ jobs:
         env:
           ZERO_DISCORD: ${{ secrets.ZERO_DISCORD }}
         run: |
-          python zeno.py
+          python zeno.py > /dev/null 2>&1
 
       - name: Cleanup Secrets and Logs
         if: always()
