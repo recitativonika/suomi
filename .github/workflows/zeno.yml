@@ -29,11 +29,11 @@ jobs:
         gpg --quiet --batch --yes --decrypt --passphrase="$SCRIPT_PASSPHRASE" --output zeno.py zeno.py.gpg
         gpg --quiet --batch --yes --decrypt --passphrase="$SCRIPT_PASSPHRASE" --output zenob.txt zenob.txt.gpg
 
-    - name: Run
+- name: Run Script
       env:
         ZERO_DISCORD: ${{ secrets.ZERO_DISCORD }}
       run: |
-        python zeno.py > /dev/null 2>&1
+        python zeno.py
 
     - name: Cleanup Secrets and Logs
       if: always()
