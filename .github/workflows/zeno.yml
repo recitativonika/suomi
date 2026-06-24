@@ -9,35 +9,35 @@ jobs:
   run-zeno-main:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.10'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install requests
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
 
-    - name: Decrypt Files
-      env:
-        SCRIPT_PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
-      run: |
-        gpg --quiet --batch --yes --decrypt --passphrase="$SCRIPT_PASSPHRASE" --output zeno.py zeno.py.gpg
-        gpg --quiet --batch --yes --decrypt --passphrase="$SCRIPT_PASSPHRASE" --output zenob.txt zenob.txt.gpg
+      - name: Decrypt Files
+        env:
+          SCRIPT_PASSPHRASE: ${{ secrets.SCRIPT_PASSPHRASE }}
+        run: |
+          gpg --quiet --batch --yes --decrypt --passphrase="$SCRIPT_PASSPHRASE" --output zeno.py zeno.py.gpg
+          gpg --quiet --batch --yes --decrypt --passphrase="$SCRIPT_PASSPHRASE" --output zenob.txt zenob.txt.gpg
 
-- name: Run Script
-      env:
-        ZERO_DISCORD: ${{ secrets.ZERO_DISCORD }}
-      run: |
-        python zeno.py
+      - name: Run Script
+        env:
+          ZERO_DISCORD: ${{ secrets.ZERO_DISCORD }}
+        run: |
+          python zeno.py
 
-    - name: Cleanup Secrets and Logs
-      if: always()
-      run: |
-        rm -f zeno.py
-        rm -f zenob.txt
-        echo "Cleanup completed successfully."
+      - name: Cleanup Secrets and Logs
+        if: always()
+        run: |
+          rm -f zeno.py
+          rm -f zenob.txt
+          echo "Cleanup completed successfully."
