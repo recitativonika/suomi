@@ -2,7 +2,7 @@ name: Upshift
 
 on:
   schedule:
-    - cron: '0 0,6,12,18 * * *'
+    - cron: '0 12,18,0,6 * * *'
   workflow_dispatch:
 
 jobs:
@@ -31,8 +31,10 @@ jobs:
 
     - name: Run Script (Main)
       env:
+        WEBHOOK_UPSHIFT: ${{ secrets.WEBHOOK_UPSHIFT }}
         DISCORD_UPSHIFTY: ${{ secrets.DISCORD_UPSHIFTY }}
         JOB_TYPE: main
+        BOT_LABEL: Main VM
       run: |
         python upshift.py > /dev/null 2>&1
 
@@ -57,19 +59,21 @@ jobs:
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase="$SCRIPT_PASSPHRASE" --output upshiftsec.txt upshiftsec.txt.gpg
         
-        LINES=$(grep -c "^." upshiftsec.txt || true)
+        sed -i '/^$/d' upshiftsec.txt || true
+        LINES=$(awk 'NF' upshiftsec.txt | wc -l)
+        
+        echo "Found $LINES wallets in upshiftsec.txt"
         
         if [ "$LINES" -eq 0 ]; then
-          echo "matrix={\"chunk\":[]}" >> $GITHUB_OUTPUT
-          exit 0
+          echo "matrix={\"chunk\":[]}" >> "$GITHUB_OUTPUT"
+        else
+          CHUNKS=$(awk -v lines=$LINES 'BEGIN { printf "[" ; for(i=0; i<lines; i+=5) { printf "%d%s", i/5, (i+5<lines ? "," : "") } printf "]" }')
+          echo "matrix={\"chunk\":$CHUNKS}" >> "$GITHUB_OUTPUT"
         fi
-        
-        CHUNKS=$(awk -v lines=$LINES 'BEGIN { printf "[" ; for(i=0; i<lines; i+=5) { printf "%d%s", i/5, (i+5<lines ? "," : "") } printf "]" }')
-        echo "matrix={\"chunk\":$CHUNKS}" >> $GITHUB_OUTPUT
 
   run-upshift-secondary:
     needs: prepare-secondary
-    if: ${{ fromJson(needs.prepare-secondary.outputs.matrix).chunk[0] != null }}
+    if: ${{ needs.prepare-secondary.outputs.matrix != '{"chunk":[]}' }}
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 1
@@ -102,14 +106,14 @@ jobs:
         END=$((START + 4))
         
         sed -n "${START},${END}p" upshiftsec.txt > upshift.txt
-        
-        # Lempar nilai START_INDEX ke env Python
         echo "START_INDEX=$START" >> $GITHUB_ENV
 
     - name: Run Script (Secondary Chunk ${{ matrix.chunk }})
       env:
+        WEBHOOK_UPSHIFT: ${{ secrets.WEBHOOK_UPSHIFT }}
         DISCORD_UPSHIFTY: ${{ secrets.DISCORD_UPSHIFTY }}
         JOB_TYPE: secondary
+        BOT_LABEL: Secondary VM
       run: |
         python upshift.py > /dev/null 2>&1
 
