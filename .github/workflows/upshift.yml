@@ -122,3 +122,27 @@ jobs:
       run: |
         rm -f upshift.py upshift.txt upshiftsec.txt
         echo "Cleanup completed successfully."
+
+  notify-completion:
+    needs: [run-upshift-main, run-upshift-secondary]
+    if: always() && !cancelled()
+    runs-on: ubuntu-latest
+    steps:
+    - name: Send Final Discord Message
+      env:
+        DISCORD_UPSHIFTY: ${{ secrets.DISCORD_UPSHIFTY }}
+      run: |
+        if [ -z "$DISCORD_UPSHIFTY" ]; then
+          exit 0
+        fi
+        
+        LOCAL_TIME=$(TZ='Asia/Jakarta' date +'%Y-%m-%d %H:%M:%S')
+        
+        PAYLOAD=$(cat <<EOF
+        {
+          "content": "--------------------------------------------------\n:white_check_mark: **Done Process [All VMs Completed]**\n:calendar_spiral: Date/Time: $LOCAL_TIME (UTC+7)\n--------------------------------------------------"
+        }
+        EOF
+        )
+        
+        curl -s -X POST -H "Content-Type: application/json" -d "$PAYLOAD" "$DISCORD_UPSHIFTY"
