@@ -2,7 +2,7 @@ name: Upshift
 
 on:
   schedule:
-    - cron: '0 12,18,0,6 * * *'
+    - cron: '0 0,12 * * *'
   workflow_dispatch:
 
 jobs:
@@ -100,7 +100,10 @@ jobs:
         gpg --quiet --batch --yes --decrypt --passphrase="$SCRIPT_PASSPHRASE" --output upshift.py upshift.py.gpg
         gpg --quiet --batch --yes --decrypt --passphrase="$SCRIPT_PASSPHRASE" --output upshiftsec.txt upshiftsec.txt.gpg
         
-        sed -i '/^$/d' upshiftsec.txt
+        sed -i '/^$/d' upshiftsec.txt || true
+        
+        TOTAL=$(awk 'NF' upshiftsec.txt | wc -l)
+        echo "TOTAL_WALLETS=$TOTAL" >> $GITHUB_ENV
         
         START=$((CHUNK * 5 + 1))
         END=$((START + 4))
