@@ -14,10 +14,10 @@ jobs:
 
       - name: Check Repository File Update
         run: |
-          mkdir -p config
+          mkdir -p config /tmp/repo_backup
           if [ -f "config/as.zip.gpg" ]; then
             git hash-object config/as.zip.gpg > /tmp/current_repo_hash.txt
-            cp config/as.zip.gpg /tmp/repo_as.zip.gpg
+            cp config/as.zip.gpg /tmp/repo_backup/as.zip.gpg
           fi
 
       - id: cache-restore
@@ -38,9 +38,10 @@ jobs:
             fi
             
             if [ "$REPO_HASH" != "$CACHED_HASH" ]; then
-              echo "🚀 NEW as.zip.gpg detected in repository! Ignoring old cache."
+              echo "🚀 NEW as.zip.gpg detected in repository! Overriding cache."
               rm -rf config/*
-              cp /tmp/repo_as.zip.gpg config/as.zip.gpg
+              cp /tmp/repo_backup/as.zip.gpg config/as.zip.gpg
+              echo "$REPO_HASH" > config/repo_hash.txt
             else
               echo "♻️ No update from repository. Resuming progress from cache."
             fi
@@ -126,10 +127,6 @@ jobs:
               rm as.zip
             fi
             rm -rf "${files[@]}"
-          fi
-          
-          if [ -f "/tmp/current_repo_hash.txt" ]; then
-            cp /tmp/current_repo_hash.txt repo_hash.txt
           fi
 
       - uses: actions/cache/save@v4
